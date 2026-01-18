@@ -1,6 +1,3 @@
-// Framework-agnostic wizard state engine for booking flow.
-// Contains: initial state, reducer/actions, persistence helpers (load/save to localStorage)
-
 import { BookingDraft } from "./types";
 
 export type WizardAction =
@@ -11,7 +8,7 @@ export type WizardAction =
   | { type: "updateTraveler"; index: number; traveler: Partial<BookingDraft["travelers"][number]> }
   | { type: "reset" };
 
-export interface WizardState extends BookingDraft {}
+export type WizardState = BookingDraft
 
 export const initialWizardState: WizardState = {
   destinationId: "",

@@ -10,20 +10,20 @@ interface Props {
 export function ReviewStep({ state, destinations }: Props) {
   const dest = destinations.find(d => d.id === state.destinationId);
   return (
-    <section>
-      <h2>Booking Review</h2>
-      <div style={{marginBottom:16}}>
-        <strong>Destination:</strong> {dest ? dest.name : "-"}
+    <section className="flex flex-col gap-6">
+      <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100 mb-2">Booking Review</h2>
+      <div className="mb-2">
+        <span className="font-semibold text-zinc-700 dark:text-zinc-300">Destination:</span> <span>{dest ? dest.name : "-"}</span>
       </div>
-      <div style={{marginBottom:16}}>
-        <strong>Departure:</strong> {state.departureDate || "-"}<br/>
-        <strong>Return:</strong> {state.returnDate || "-"}
+      <div className="mb-2">
+        <span className="font-semibold text-zinc-700 dark:text-zinc-300">Departure:</span> <span>{state.departureDate || "-"}</span><br/>
+        <span className="font-semibold text-zinc-700 dark:text-zinc-300">Return:</span> <span>{state.returnDate || "-"}</span>
       </div>
       <div>
-        <strong>Travelers:</strong>
-        <ol>
+        <span className="font-semibold text-zinc-700 dark:text-zinc-300">Travelers:</span>
+        <ol className="list-decimal ml-4 mt-1 text-zinc-700 dark:text-zinc-300">
           {state.travelers.map((trav, i) => (
-            <li key={i}>{trav.fullName} (age {trav.age})</li>
+            <li key={i} className="mb-1">{trav.fullName} (age {trav.age})</li>
           ))}
         </ol>
       </div>

@@ -88,3 +88,68 @@ Use the reducer/state engine from src/lib/wizardState.ts and validation from src
 Persist draft state to localStorage and restore on load.
 Ensure browser back works by using URL step state (?step= or route segments).
 Keep components small and typed.
+
+Agent 6 — Component tests (Testing Library + MSW)
+
+Files allowed:
+	•	src/components/wizard/*.test.tsx
+	•	src/test/msw/* (handlers adjustments)
+	•	src/test/setup.ts
+
+Prompt:
+
+Add Testing Library + MSW tests for the wizard:
+	•	Step 1 validation blocks Next (returnDate before departureDate)
+	•	Step 2 requires at least 1 traveler; cannot exceed 5
+	•	Submit disables button + shows loading; on success shows bookingId
+
+Tests should interact like a user (user-event) and assert visible behavior.
+Prefer role/label queries. Avoid snapshots.
+
+This gets you “quality tests” without the fragility of E2E everywhere.
+
+Agent 7 — Playwright E2E (minimal but high impact)
+
+Files allowed:
+	•	playwright/*.spec.ts
+	•	playwright.config.ts
+
+Prompt:
+
+Write 2–3 Playwright tests:
+	1.	happy path end-to-end booking yields confirmation with bookingId
+	2.	browser back navigates to previous step and preserves inputs
+	3.	refresh on step 2 keeps state and step
+
+Use role/label selectors. Avoid hard waits; assert on UI states.
+
+Agent 8 — README (sell the senior choices)
+
+Files allowed: README.md only.
+
+Prompt:
+
+Write a concise README with:
+	•	install/run instructions
+	•	architecture decisions (state, persistence, routing)
+	•	testing strategy (unit/component/e2e) and why
+	•	tradeoffs and what you’d do next with more time
+Keep it honest and senior.
+
+Include a line like:
+
+“I prioritised testability and added a focused set of tests around the core booking flow and business rules.”
+
+Cursor Agent Prompt — Visual Design Layer (Glassmorphism)
+
+Scope (important):
+This agent may only touch:
+	•	src/components/ui/*
+	•	src/components/wizard/*
+	•	global styles (e.g. globals.css, Tailwind config if present)
+
+It must not:
+	•	change business logic
+	•	change validation rules
+	•	change routing or persistence
+

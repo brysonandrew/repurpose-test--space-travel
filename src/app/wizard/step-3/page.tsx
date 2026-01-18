@@ -1,12 +1,14 @@
 'use client';
 import React, { useReducer, useEffect, useRef, useState } from "react";
-import { ReviewStep } from "../../../components/wizard/ReviewStep";
-import { wizardReducer, initialWizardState, saveWizardDraft, loadWizardDraft, clearWizardDraft } from "../../../lib/wizardState";
-import { validateDraft } from "../../../lib/validation";
+import { ReviewStep } from "@/components/wizard/ReviewStep";
+import { wizardReducer, initialWizardState, saveWizardDraft, loadWizardDraft, clearWizardDraft } from "@/lib/wizardState";
+import { validateDraft } from "@/lib/validation";
 import { useRouter } from "next/navigation";
+import { Destination } from "@/lib/types";
+import WizardShell from "@/app/wizard/shell";
 
 export default function Step3() {
-  const [state, dispatch] = useReducer(
+  const [state] = useReducer(
     wizardReducer,
     undefined,
     () => loadWizardDraft() ?? initialWizardState
@@ -16,7 +18,7 @@ export default function Step3() {
   const [bookingId, setBookingId] = useState<string | null>(null);
   const router = useRouter();
   const errors = validateDraft(state);
-  const [destinations, setDestinations] = useState<any[]>([]);
+  const [destinations, setDestinations] = useState<Destination[]>([]);
   const hasSubmitted = useRef(false);
 
   useEffect(() => {
@@ -57,6 +59,7 @@ export default function Step3() {
       } else {
         throw new Error("Booking failed: No booking ID returned");
       }
+/* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (e: any) {
       setError(e.message || "Submit failed");
     } finally {
@@ -75,15 +78,30 @@ export default function Step3() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <WizardShell>
+
+    <form onSubmit={handleSubmit} className="flex flex-col gap-10">
       <ReviewStep state={state} destinations={destinations} />
-      {error && <div style={{ color: "red", marginTop: 20 }}>{error}</div>}
-      <div style={{ display: "flex", justifyContent: "space-between", gap: 24, marginTop: 36 }}>
-        <button type="button" onClick={handleBack} disabled={submitting}>← Back</button>
-        <button type="submit" disabled={submitting}>
+      {error && <div className="text-red-500 mt-3">{error}</div>}
+      <div className="flex w-full justify-between gap-4 mt-7">
+        <button
+          type="button"
+          onClick={handleBack}
+          disabled={submitting}
+          className="px-6 py-2 font-medium rounded-lg border bg-white/70 dark:bg-zinc-900/60 border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all disabled:opacity-50"
+        >
+          ← Back
+        </button>
+        <button
+          type="submit"
+          disabled={submitting}
+          className="px-6 py-2 font-bold rounded-lg bg-zinc-900/80 text-white hover:bg-zinc-900 transition-all disabled:opacity-50"
+        >
           {submitting ? "Booking..." : "Confirm and Book"}
         </button>
       </div>
     </form>
+    </WizardShell>
+
   );
 }

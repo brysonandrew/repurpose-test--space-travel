@@ -1,10 +1,11 @@
 'use client'
 import React, { useReducer, useEffect } from "react";
-import { DestinationStep } from "../../../components/wizard/DestinationStep";
-import { DateInput } from "../../../components/ui/DateInput";
-import { wizardReducer, initialWizardState, saveWizardDraft, loadWizardDraft, WizardState } from "../../../lib/wizardState";
-import { validateDraft } from "../../../lib/validation";
+import { DestinationStep } from "@/components/wizard/DestinationStep";
+import { DateInput } from "@/components/ui/DateInput";
+import { wizardReducer, initialWizardState, saveWizardDraft, loadWizardDraft } from "@/lib/wizardState";
+import { validateDraft } from "@/lib/validation";
 import { useRouter } from "next/navigation";
+import WizardShell from "@/app/wizard/shell";
 
 export default function Step1() {
   const [state, dispatch] = useReducer(
@@ -30,13 +31,15 @@ export default function Step1() {
   }
 
   return (
-    <form onSubmit={handleNext}>
+    <WizardShell>
+
+    <form onSubmit={handleNext} className="flex flex-col gap-8">
       <DestinationStep
         value={state.destinationId}
         onChange={destinationId => dispatch({ type: "setDestination", destinationId })}
         error={errors.destinationId}
       />
-      <div style={{ display: "flex", gap: 20, marginTop: 18 }}>
+      <div className="flex flex-col sm:flex-row gap-6 mt-2">
         <DateInput
           label="Departure date"
           value={state.departureDate}
@@ -51,9 +54,13 @@ export default function Step1() {
           error={errors.returnDate}
         />
       </div>
-      <button type="submit" style={{ marginTop: 30, fontWeight: 700 }}>
-        Next: Travelers →
-      </button>
+      <div className="flex w-full justify-end">
+        <button type="submit" className="mt-6 font-bold px-6 py-2 rounded-lg bg-zinc-900/80 text-white hover:bg-zinc-900 transition-all">
+          Next: Travelers →
+        </button>
+      </div>
     </form>
+    </WizardShell>
+
   );
 }

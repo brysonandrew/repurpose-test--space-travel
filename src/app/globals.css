@@ -22,5 +22,31 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
+
+/* Glassmorphism base: used by Card components */
+.bg-glass {
+  @apply backdrop-blur-md bg-white/60 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 shadow-sm rounded-xl;
+}
+.border-glass-selected {
+  @apply ring-2 border;
+  border-color: var(--color-primary);
+  --tw-ring-color: color-mix(in srgb, var(--color-primary) 40%, transparent);
+}
+/* Primary accent for focus ring, etc */
+:root {
+  --color-primary: #4f65ff;
+}
+.text-primary {
+  color: var(--color-primary);
+}
+.ring-primary {
+  --tw-ring-color: var(--color-primary);
+}
+.accent-primary {
+  accent-color: var(--color-primary);
+}
+

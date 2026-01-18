@@ -18,7 +18,7 @@ export interface BookingDraft {
   travelers: Traveler[];
 }
 
-export interface BookingPayload extends BookingDraft {}
+export type BookingPayload = BookingDraft;
 
 export interface ValidationErrors {
   destinationId?: string;
