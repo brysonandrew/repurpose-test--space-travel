@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   --background: #ffffff;
@@ -29,10 +29,10 @@ body {
 
 /* Glassmorphism base: used by Card components */
 .bg-glass {
-  @apply backdrop-blur-md bg-white/60 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 shadow-sm rounded-xl;
+  @apply rounded-xl border border-zinc-200 bg-white/60 shadow-sm backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-900/60;
 }
 .border-glass-selected {
-  @apply ring-2 border;
+  @apply border ring-2;
   border-color: var(--color-primary);
   --tw-ring-color: color-mix(in srgb, var(--color-primary) 40%, transparent);
 }
@@ -49,4 +49,3 @@ body {
 .accent-primary {
   accent-color: var(--color-primary);
 }
-

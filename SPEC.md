@@ -3,8 +3,8 @@
 ## Code Assignment for Senior Frontend Developer
 
 ### Assignment Objective
-The objective of this assignment is to shows us the best, cleanest, most production-ready, high quality code you can delivery with modern tools. This is your code-level business card.
 
+The objective of this assignment is to shows us the best, cleanest, most production-ready, high quality code you can delivery with modern tools. This is your code-level business card.
 
 ### Use Any Tools
 
@@ -25,17 +25,20 @@ The previous developer left abruptly (something about a one-way ticket to Europa
 A **3-step booking wizard**:
 
 #### Step 1: Destination
+
 - Fetch and display available destinations from the API
 - Show each destination's name, distance, and travel time
 - User selects one destination
 - User picks departure date and return date
 
 #### Step 2: Travelers
+
 - Add between 1-5 travelers
 - Each traveler requires: full name and age
 - Ability to add/remove travelers dynamically
 
 #### Step 3: Review & Confirm
+
 - Display complete booking summary (destination details, dates, all travelers)
 - Submit button posts to the bookings API
 - Show confirmation with booking ID on success
@@ -69,7 +72,8 @@ Implement these as Next.js API routes. We've provided the mock data below — yo
 
 #### `POST /api/bookings`
 
-Accepts the completed booking. 
+Accepts the completed booking.
+
 ```json
 {
   "destinationId": "mars",
@@ -90,12 +94,11 @@ Returns `{ success: true, bookingId: "XYZ123" }`.
 
 ### Functional Requirements
 
-| Requirement | Details |
-|-------------|---------|
-| **Cross-field validation** | Return date must be after departure date. At least one traveler required. |
-| **Back button behavior** | Browser back button should navigate to previous step with form state preserved. Refresh should not lose current step's data. |
-| **Submission UX** | Handle loading state, prevent double-submit, show confirmation on success. |
-
+| Requirement                | Details                                                                                                                      |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| **Cross-field validation** | Return date must be after departure date. At least one traveler required.                                                    |
+| **Back button behavior**   | Browser back button should navigate to previous step with form state preserved. Refresh should not lose current step's data. |
+| **Submission UX**          | Handle loading state, prevent double-submit, show confirmation on success.                                                   |
 
 ---
 
@@ -118,23 +121,24 @@ Approximately **3-4 hours**. If it takes longer, feel free to stop and note what
 
 ### Evaluation Criteria
 
-| Area | What We're Looking For |
-|------|------------------------|
-| **Correctness** | Wizard works end-to-end, validation behaves correctly |
-| **Visual design** | Clean, responsive, pragmatic UX/UI |
-| **Production Level** | All aspects of production-ready code are covered, functional and non-functional |
-| **Architecture & Design** | Clear separation of concerns, appropriate abstractions |
-| **State Management** | Clean data flow, balance between local and shared |
-| **Tech choices** | Appropriate tool for the job with the right reasons |
-| **Navigation & Flow** | Back button works, state survives refresh, URLs make sense |
-| **Code Quality** | Readable, well-named, idiomatic TypeScript, Clean Code |
-| **Overall Quality** | All aspects of the deliverable have been quality assured |
-| **Changeability** | How easy it is clean up, refactor, and evolve this code |
-| **Pragmatism** | No over-engineering, sensible trade-offs |
+| Area                      | What We're Looking For                                                          |
+| ------------------------- | ------------------------------------------------------------------------------- |
+| **Correctness**           | Wizard works end-to-end, validation behaves correctly                           |
+| **Visual design**         | Clean, responsive, pragmatic UX/UI                                              |
+| **Production Level**      | All aspects of production-ready code are covered, functional and non-functional |
+| **Architecture & Design** | Clear separation of concerns, appropriate abstractions                          |
+| **State Management**      | Clean data flow, balance between local and shared                               |
+| **Tech choices**          | Appropriate tool for the job with the right reasons                             |
+| **Navigation & Flow**     | Back button works, state survives refresh, URLs make sense                      |
+| **Code Quality**          | Readable, well-named, idiomatic TypeScript, Clean Code                          |
+| **Overall Quality**       | All aspects of the deliverable have been quality assured                        |
+| **Changeability**         | How easy it is clean up, refactor, and evolve this code                         |
+| **Pragmatism**            | No over-engineering, sensible trade-offs                                        |
 
 ---
 
 ### What We're NOT Evaluating
+
 - Deployment
 
 ---

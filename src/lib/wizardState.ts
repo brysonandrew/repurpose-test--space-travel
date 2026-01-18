@@ -1,22 +1,22 @@
-import { BookingDraft } from "./types";
+import { BookingDraft } from './types';
 
 export type WizardAction =
-  | { type: "setDestination"; destinationId: string }
-  | { type: "setDates"; departureDate: string; returnDate: string }
-  | { type: "addTraveler" }
-  | { type: "removeTraveler"; index: number }
-  | { type: "updateTraveler"; index: number; traveler: Partial<BookingDraft["travelers"][number]> }
-  | { type: "reset" };
+  | { type: 'setDestination'; destinationId: string }
+  | { type: 'setDates'; departureDate: string; returnDate: string }
+  | { type: 'addTraveler' }
+  | { type: 'removeTraveler'; index: number }
+  | { type: 'updateTraveler'; index: number; traveler: Partial<BookingDraft['travelers'][number]> }
+  | { type: 'reset' };
 
-export type WizardState = BookingDraft
+export type WizardState = BookingDraft;
 
 export const initialWizardState: WizardState = {
-  destinationId: "",
-  departureDate: "",
-  returnDate: "",
+  destinationId: '',
+  departureDate: '',
+  returnDate: '',
   travelers: [
     {
-      fullName: "",
+      fullName: '',
       age: undefined,
     },
   ],
@@ -24,26 +24,26 @@ export const initialWizardState: WizardState = {
 
 export function wizardReducer(state: WizardState, action: WizardAction): WizardState {
   switch (action.type) {
-    case "setDestination":
+    case 'setDestination':
       return { ...state, destinationId: action.destinationId };
-    case "setDates":
+    case 'setDates':
       return { ...state, departureDate: action.departureDate, returnDate: action.returnDate };
-    case "addTraveler":
+    case 'addTraveler':
       if (state.travelers.length >= 5) return state;
-      return { ...state, travelers: [...state.travelers, { fullName: "", age: undefined }] };
-    case "removeTraveler":
+      return { ...state, travelers: [...state.travelers, { fullName: '', age: undefined }] };
+    case 'removeTraveler':
       if (state.travelers.length <= 1) return state;
       return {
         ...state,
         travelers: state.travelers.filter((_, i) => i !== action.index),
       };
-    case "updateTraveler": {
+    case 'updateTraveler': {
       const travelers = state.travelers.map((trav, idx) =>
-        idx === action.index ? { ...trav, ...action.traveler } : trav
+        idx === action.index ? { ...trav, ...action.traveler } : trav,
       );
       return { ...state, travelers };
     }
-    case "reset":
+    case 'reset':
       return initialWizardState;
     default:
       return state;
@@ -51,7 +51,7 @@ export function wizardReducer(state: WizardState, action: WizardAction): WizardS
 }
 
 // Persistence helpers (versioned)
-const STORAGE_KEY = "wizard_draft_v1";
+const STORAGE_KEY = 'wizard_draft_v1';
 
 export function saveWizardDraft(state: WizardState) {
   try {

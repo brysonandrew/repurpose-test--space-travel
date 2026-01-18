@@ -5,7 +5,7 @@ interface BookingPayload {
   destinationId: string;
   travelers: number;
   returnDate: string;
-  departureDate: string
+  departureDate: string;
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -23,15 +23,9 @@ export async function POST(request: Request) {
   const body = await request.json();
 
   if (!isValidPayload(body)) {
-    return NextResponse.json(
-      { error: 'Invalid payload' },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
   }
   // Artificial delay: 1000-2000 ms
   await delay(1000 + Math.floor(Math.random() * 1000));
-  return NextResponse.json(
-    { success: true, bookingId: 'XYZ123' },
-    { status: 200 }
-  );
+  return NextResponse.json({ success: true, bookingId: 'XYZ123' }, { status: 200 });
 }

@@ -3,11 +3,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ReviewStep } from '@/components/wizard/ReviewStep';
-import {
-  initialWizardState,
-  loadWizardDraft,
-  clearWizardDraft,
-} from '@/lib/wizardState';
+import { initialWizardState, loadWizardDraft, clearWizardDraft } from '@/lib/wizardState';
 import { validateDraft } from '@/lib/validation';
 import type { Destination } from '@/lib/types';
 import WizardShell from '@/app/wizard/shell';
@@ -105,47 +101,53 @@ export default function Step3() {
 
   if (bookingId) {
     return (
-          <WizardShell>
-      <div className="mt-14">
-        <h2 className="text-xl font-semibold">Booking Confirmed!</h2>
-        <p className="mt-2">
-          Your booking ID: <b>{bookingId}</b>
-        </p>
-        <button
-          type="button"
-          onClick={() => router.push('/wizard/step-1')}
-          className="mt-6 underline underline-offset-4"
-        >
-          Book another trip
-        </button>
-      </div>
+      <WizardShell>
+        <div className="mt-14">
+          <h2 className="text-xl font-semibold">Booking Confirmed!</h2>
+          <p className="mt-2">
+            Your booking ID: <b>{bookingId}</b>
+          </p>
+          <button
+            type="button"
+            onClick={() => router.push('/wizard/step-1')}
+            className="mt-6 underline underline-offset-4"
+          >
+            Book another trip
+          </button>
+        </div>
       </WizardShell>
     );
   }
 
   return (
     <WizardShell>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-10">
-      <ReviewStep state={state} destinations={destinations} />
-      {error && <div className="text-red-500 mt-3">{error}</div>}
-      <div className="flex w-full justify-between gap-4 mt-7">
-        <button
-          type="button"
-          onClick={handleBack}
-          disabled={submitting}
-          className="px-6 py-2 font-medium rounded-lg border bg-white/70 dark:bg-zinc-900/60 border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all disabled:opacity-50"
-        >
-          ← Back
-        </button>
-        <button
-          type="submit"
-          disabled={submitting}
-          className="px-6 py-2 font-bold rounded-lg bg-zinc-900/80 text-white hover:bg-zinc-900 transition-all disabled:opacity-50"
-        >
-          {submitting ? 'Booking...' : 'Confirm and Book'}
-        </button>
-      </div>
-    </form>
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-10"
+      >
+        <ReviewStep
+          state={state}
+          destinations={destinations}
+        />
+        {error && <div className="mt-3 text-red-500">{error}</div>}
+        <div className="mt-7 flex w-full justify-between gap-4">
+          <button
+            type="button"
+            onClick={handleBack}
+            disabled={submitting}
+            className="rounded-lg border border-zinc-200 bg-white/70 px-6 py-2 font-medium text-zinc-900 transition-all hover:bg-zinc-100 disabled:opacity-50 dark:border-zinc-700 dark:bg-zinc-900/60 dark:text-zinc-100 dark:hover:bg-zinc-800"
+          >
+            ← Back
+          </button>
+          <button
+            type="submit"
+            disabled={submitting}
+            className="rounded-lg bg-zinc-900/80 px-6 py-2 font-bold text-white transition-all hover:bg-zinc-900 disabled:opacity-50"
+          >
+            {submitting ? 'Booking...' : 'Confirm and Book'}
+          </button>
+        </div>
+      </form>
     </WizardShell>
   );
 }

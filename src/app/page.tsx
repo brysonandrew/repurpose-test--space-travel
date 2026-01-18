@@ -15,20 +15,16 @@ export default function SplashPage() {
   }, [router]);
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.15),transparent_60%)]">
-      <div className="bg-glass px-10 py-12 text-center max-w-md w-full">
-        <h1 className="text-2xl font-semibold tracking-tight">
-          Intergalactic Travel Agency
-        </h1>
+    <main className="flex min-h-screen items-center justify-center bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.15),transparent_60%)]">
+      <div className="bg-glass w-full max-w-md px-10 py-12 text-center">
+        <h1 className="text-2xl font-semibold tracking-tight">Intergalactic Travel Agency</h1>
 
         <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
           Book your next off-world journey
         </p>
 
         <div className="mt-8 flex flex-col items-center gap-3">
-          <div className="text-xs text-zinc-500">
-            Preparing your booking experience…
-          </div>
+          <div className="text-xs text-zinc-500">Preparing your booking experience…</div>
 
           <button
             onClick={() => router.replace('/wizard')}

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { Destination } from "../../lib/types";
-import clsx from "clsx";
+import { useEffect, useState } from 'react';
+import { Destination } from '../../lib/types';
+import clsx from 'clsx';
 
 interface Props {
   value: string;
@@ -18,13 +18,13 @@ export function DestinationStep({ value, onChange, error }: Props) {
       try {
         setLoading(true);
         setLoadError(null);
-        const res = await fetch("/api/destinations");
+        const res = await fetch('/api/destinations');
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data: Destination[] = await res.json();
         setDestinations(data);
         /* eslint-disable @typescript-eslint/no-explicit-any */
       } catch (e: any) {
-        setLoadError(e.message || "Failed to load");
+        setLoadError(e.message || 'Failed to load');
       } finally {
         setLoading(false);
       }
@@ -34,7 +34,9 @@ export function DestinationStep({ value, onChange, error }: Props) {
 
   return (
     <section className="flex flex-col gap-6">
-      <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100 mb-2">Choose your destination</h2>
+      <h2 className="mb-2 text-xl font-semibold text-zinc-900 dark:text-zinc-100">
+        Choose your destination
+      </h2>
       {loading && <div className="text-zinc-500">Loading destinations…</div>}
       {loadError && <div className="text-red-500">Error: {loadError}</div>}
       {!loading && !loadError && (
@@ -42,23 +44,28 @@ export function DestinationStep({ value, onChange, error }: Props) {
           {destinations.map((d) => (
             <li key={d.id}>
               <label className="block cursor-pointer">
-                <div className={
-                  clsx(value === d.id
-                    ? "ring-2 ring-primary/40 border-primary bg-white/80 dark:bg-zinc-900/70"
-                    : "border-zinc-200 dark:border-zinc-700 bg-white/60 dark:bg-zinc-900/60 hover:bg-white/80 dark:hover:bg-zinc-900/80",
-                  " flex items-center border rounded-lg px-5 py-4 transition-all duration-150 gap-3 backdrop-blur-sm shadow-sm select-none")}>
+                <div
+                  className={clsx(
+                    value === d.id
+                      ? 'ring-primary/40 border-primary bg-white/80 ring-2 dark:bg-zinc-900/70'
+                      : 'border-zinc-200 bg-white/60 hover:bg-white/80 dark:border-zinc-700 dark:bg-zinc-900/60 dark:hover:bg-zinc-900/80',
+                    'flex items-center gap-3 rounded-lg border px-5 py-4 shadow-sm backdrop-blur-sm transition-all duration-150 select-none',
+                  )}
+                >
                   <input
                     type="radio"
                     name="destination"
                     value={d.id}
                     checked={value === d.id}
                     onChange={() => onChange(d.id)}
-                    className="accent-primary focus-visible:ring-2 focus-visible:ring-primary/60 focus:outline-none mr-4"
+                    className="accent-primary focus-visible:ring-primary/60 mr-4 focus:outline-none focus-visible:ring-2"
                   />
                   <div className="flex flex-col">
                     <span className="font-medium text-zinc-900 dark:text-zinc-100">{d.name}</span>
                     {d.description && (
-                      <span className="text-sm text-zinc-500 dark:text-zinc-400">{d.description}</span>
+                      <span className="text-sm text-zinc-500 dark:text-zinc-400">
+                        {d.description}
+                      </span>
                     )}
                   </div>
                 </div>
@@ -67,7 +74,7 @@ export function DestinationStep({ value, onChange, error }: Props) {
           ))}
         </ul>
       )}
-      {error && <div className="text-red-500 mt-2">{error}</div>}
+      {error && <div className="mt-2 text-red-500">{error}</div>}
     </section>
   );
 }
