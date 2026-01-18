@@ -10,7 +10,7 @@ export function StepIndicator({ steps, currentIdx, className = "", gap = 3 }: {
   className?: string;
 }) {
   return (
-    <nav aria-label="Progress" className={clsx("flex items-center", className)}>
+    <nav aria-label="Progress" className={clsx("flex items-center gap-4", className)}>
       {steps.map((label, i) => (
         <div key={i} className={clsx(
           "flex items-center",

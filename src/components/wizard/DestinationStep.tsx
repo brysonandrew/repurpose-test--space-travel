@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Destination } from "../../lib/types";
+import clsx from "clsx";
 
 interface Props {
   value: string;
@@ -42,10 +43,10 @@ export function DestinationStep({ value, onChange, error }: Props) {
             <li key={d.id}>
               <label className="block cursor-pointer">
                 <div className={
-                  value === d.id
+                  clsx(value === d.id
                     ? "ring-2 ring-primary/40 border-primary bg-white/80 dark:bg-zinc-900/70"
-                    : "border-zinc-200 dark:border-zinc-700 bg-white/60 dark:bg-zinc-900/60 hover:bg-white/80 dark:hover:bg-zinc-900/80"
-                 + " flex items-center border rounded-lg px-5 py-4 transition-all duration-150 gap-3 backdrop-blur-sm shadow-sm select-none"}>
+                    : "border-zinc-200 dark:border-zinc-700 bg-white/60 dark:bg-zinc-900/60 hover:bg-white/80 dark:hover:bg-zinc-900/80",
+                  " flex items-center border rounded-lg px-5 py-4 transition-all duration-150 gap-3 backdrop-blur-sm shadow-sm select-none")}>
                   <input
                     type="radio"
                     name="destination"
