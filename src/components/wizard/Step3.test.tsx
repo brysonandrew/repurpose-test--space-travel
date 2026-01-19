@@ -43,12 +43,7 @@ describe('Wizard Step 3 - Submit & Booking Confirmation', () => {
       name: /confirm and book/i,
     }) as HTMLButtonElement;
 
-    debug(
-      'Submit button initial disabled?',
-      submitBtn.disabled,
-      'text:',
-      submitBtn.textContent,
-    );
+    debug('Submit button initial disabled?', submitBtn.disabled, 'text:', submitBtn.textContent);
 
     debug('Clicking submit button');
     try {

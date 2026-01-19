@@ -61,9 +61,9 @@ export function DestinationStep({ value, onBlur, onChange, error }: Props) {
                     onBlur={onBlur}
                     className="accent-primary focus-visible:ring-primary/60 mr-4 focus:outline-none focus-visible:ring-2"
                   />
-                  <div className="flex items-center justify-between w-full">
+                  <div className="flex w-full items-center justify-between">
                     <span className="font-medium text-zinc-100">{d.name}</span>
-                    <div className='flex flex-col items-end'>
+                    <div className="flex flex-col items-end">
                       <span className="text-sm text-zinc-400">{d.distance}</span>
                       <span className="text-sm text-zinc-400">{d.travelTime}</span>
                     </div>
