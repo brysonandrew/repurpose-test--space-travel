@@ -14,7 +14,7 @@ export type TravelerTouched = Array<{ fullName?: boolean; age?: boolean }>;
 export default function Step2() {
   const { state, dispatch } = useWizardDraft();
   const router = useRouter();
-
+console.log(state)
   const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
   const [touched, setTouched] = useState<TravelerTouched>([]);
 

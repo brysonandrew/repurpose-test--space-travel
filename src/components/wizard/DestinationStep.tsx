@@ -1,6 +1,7 @@
 import { FocusEventHandler, useEffect, useState } from 'react';
 import { Destination } from '@/lib/types';
 import clsx from 'clsx';
+import { Skeleton } from '@/components/ui/Skeleton';
 
 interface Props {
   value: string;
@@ -36,7 +37,7 @@ export function DestinationStep({ value, onBlur, onChange, error }: Props) {
   return (
     <section className="flex flex-col gap-6">
       <h2 className="mb-2 text-xl font-semibold text-zinc-100">Choose your destination</h2>
-      {loading && <div className="text-zinc-500">Loading destinations…</div>}
+      {loading && <Skeleton count={4} />}
       {loadError && <div className="text-red-500">Error: {loadError}</div>}
       {!loading && !loadError && (
         <ul className="flex flex-col gap-4">
@@ -60,11 +61,12 @@ export function DestinationStep({ value, onBlur, onChange, error }: Props) {
                     onBlur={onBlur}
                     className="accent-primary focus-visible:ring-primary/60 mr-4 focus:outline-none focus-visible:ring-2"
                   />
-                  <div className="flex flex-col">
+                  <div className="flex items-center justify-between w-full">
                     <span className="font-medium text-zinc-100">{d.name}</span>
-                    {d.description && (
-                      <span className="text-sm text-zinc-400">{d.description}</span>
-                    )}
+                    <div className='flex flex-col items-end'>
+                      <span className="text-sm text-zinc-400">{d.distance}</span>
+                      <span className="text-sm text-zinc-400">{d.travelTime}</span>
+                    </div>
                   </div>
                 </div>
               </label>

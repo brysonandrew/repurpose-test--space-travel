@@ -16,21 +16,95 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Architecture
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Booking Wizard Architecture Decisions
 
-## Learn More
+## 1. URL Strategy for Steps
 
-To learn more about Next.js, take a look at the following resources:
+- **Decision:** Use path-based URLs for wizard steps, e.g. `/wizard/step-1`, `/wizard/step-2`, `/wizard/step-3`
+- **Rationale:**
+  - Path parameters express hierarchy and are more readable/bookmarkable than query params for step-based flows.
+  - Works seamlessly with Next.js App Router segment-based routing, which cleanly maps step UI to pages.
+  - Makes it trivial for the browser back button to move to previous steps without custom code.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 2. State Persistence (Back Button & Refresh)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Decision:** Use `localStorage` to persist booking form state (all steps).
+- **Rationale:**
+  - LocalStorage is simple, reliable, and survives page refreshes and browser restarts.
+  - Each step reads/writes only its relevant slice, but submits the combined state.
+  - The state is also reflected in the URL (current step), making navigation predictable and robust.
+  - This approach de-couples UI navigation from form data, maximizing resilience to accidental reloads or partial step revisits.
 
-## Deploy on Vercel
+## 3. State Management Approach
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Decision:** Use `useReducer` (React) for in-memory wizard state, with sync to `localStorage` on change.
+- **Rationale:**
+  - Keeps state easily testable, predictable, and isolated to the wizard, without added complexity of third-party stores.
+  - `useReducer` is ideal for multi-step wizards with explicit state transitions and cross-field validation.
+  - Pure state transition logic is placed in `lib/formReducer.ts` (or equivalent), making it easy to test and reuse outside React.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 4. Component Boundaries (Per Step)
+
+- **Decision:**
+  - Each wizard step is its own component (e.g. `<DestinationStep />`, `<TravelersStep />`, `<ReviewStep />`)
+  - A top-level `<BookingWizard />` component handles routing and orchestrates state/context.
+  - Core UI elements for destinations, traveler forms, review summary, and confirmation are reusable subcomponents.
+- **Rationale:**
+  - Step isolation enforces clarity and maintainability.
+  - Clear boundaries enable focused unit and integration tests.
+  - Promotes SRP (single responsibility principle) and simplifies future extensibility.
+
+## 5. Testing Strategy (Unit vs Component vs E2E)
+
+- **Decision:**
+  - **Unit tests**: All validation and state logic (reducers, validators) tested in isolation.
+  - **Component tests**: Each wizard step as a component with React Testing Library/Playwright Component.
+  - **E2E tests**: Full wizard flow (happy path, edge cases, persistence) with Playwright.
+- **Rationale:**
+  - Tests at all levels ensure correctness, reduce regressions, and enable safe refactoring.
+  - E2E tests are essential for verifying navigation (back button, refresh) and user journeys.
+  - Pure logic in `lib/` enables fast headless unit tests independent of UI.
+
+---
+
+**Summary:**
+
+- URL reflects wizard step in the path (`/wizard/step-1`, etc.).
+- All form state persisted in localStorage and managed in-memory with useReducer.
+- Wizard decomposed into per-step components and pure logic helpers for rules/validation.
+- Comprehensive tests: unit (logic), component (UI), e2e (user flow, nav, persistence).
+
+## Short description of approach (process, tools used)
+
+I implemented this as a small, testable React wizard with three steps (Destination → Travelers → Review/Submit), keeping state and validation centralized so each step stays mostly “dumb” and easy to reason about.
+
+Tools / libraries
+
+- React + TypeScript
+- Vite + Vitest
+- React Testing Library + user-event
+- Tailwind CSS for styling
+
+AI Used
+
+- Cursor (macro)
+- ChatGPT (micro)
+
+Intial Outline 1. Architecture & Decisions 2. Types + Validation 3. State / Persistence Engine 4. Next API Routes 5. UI Skeleton 6. Component Tests 7. Playwright E2E
+
+Process
+
+- Skimmed the requirements and identified the key states/transitions (step navigation, validation gates, submit lifecycle).
+- Built the UI step-by-step, wiring state + validation early so the “Next” / “Back” behaviour matched the spec from the start.
+- Added unit tests alongside the steps to lock in behaviour (date validation, traveler min/max, submit loading/success).
+- Iterated on accessibility and testability (semantic headings/roles, predictable labels, stable selectors when needed).
+- Made sure tests pass
+- Went through the wizard several times to test UX
+- Checked responsiveness of viewport
+- Removed AI artifacts, dead code and unused components
+
+## Feedback on the assignment (optional)
+
+It was a well-scoped, meaningful test for a coder's Next.js ability.

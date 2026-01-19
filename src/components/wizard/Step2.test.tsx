@@ -8,13 +8,12 @@ import Step2 from '@/app/wizard/step-2/page';
 
 import '@/test/setup';
 import { renderWithWizard } from '@/test/utils/renderWithWizard';
-
-const INIT_STATE = {};
+import { INIT_STATE_STEP_2 } from '@/test/constants';
 
 describe('Wizard Step 2 - Travelers min/max', () => {
   it('requires at least 1 traveler (Remove is disabled when one traveler)', async () => {
     debug('Rendering Step2');
-    renderWithWizard(<Step2 />);
+    renderWithWizard(<Step2 />, { initialState: INIT_STATE_STEP_2 });
     debug('Waiting for Step2 heading');
     let travelersHeading;
     try {

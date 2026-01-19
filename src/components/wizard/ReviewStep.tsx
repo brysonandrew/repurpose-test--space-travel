@@ -10,7 +10,7 @@ export function ReviewStep({ state, destinations }: Props) {
   const destination = destinations.find((d) => d.id === state.destinationId);
 
   return (
-    <section className="mx-auto flex max-w-nav flex-col gap-6 rounded-xl bg-zinc-900/60 p-6 shadow-sm">
+    <section className="mx-auto flex w-full flex-col gap-6 rounded-xl bg-zinc-900/60 p-6 shadow-sm">
       <h2 className="text-center text-2xl font-semibold text-zinc-100">Booking Review</h2>
 
       <div className="flex flex-col gap-3 text-zinc-300">

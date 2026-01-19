@@ -3,7 +3,8 @@
 export interface Destination {
   id: string;
   name: string;
-  description: string;
+  distance: string;
+  travelTime: string;
 }
 
 export interface Traveler {

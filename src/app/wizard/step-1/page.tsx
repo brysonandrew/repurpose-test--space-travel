@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { DestinationStep } from '@/components/wizard/DestinationStep';
 import { FormAlert } from '@/components/shared/FormAlert';
 import { WizardFooter } from '@/components/shared/WizardFooter';
@@ -23,9 +23,8 @@ export default function Step1() {
   const [touched, setTouched] = useState<Step1Touched>({});
   const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
 
-  const errors = useMemo(() => validateDraft(state), [state]);
+  const errors = validateDraft(state);
   const hasErrors = Boolean(errors.destinationId || errors.departureDate || errors.returnDate);
-
   const showError = (key: keyof Step1Touched) => hasTriedSubmit || touched[key];
 
   function handleNext(e: React.FormEvent) {
