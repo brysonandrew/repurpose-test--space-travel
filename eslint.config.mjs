@@ -14,9 +14,21 @@ const eslintConfig = defineConfig([
     'build/**',
     'next-env.d.ts',
   ]),
+
+  // ✅ Only apply Vitest globals/rules to test files
   {
-    plugins: {
-      vitest,
+    files: ['**/*.{test,spec}.{ts,tsx}', '**/test/**/*.{ts,tsx}'],
+    plugins: { vitest },
+    rules: {
+      ...vitest.configs.recommended.rules,
+    },
+  },
+
+  // ✅ Optional: also apply to Playwright tests if you want vitest disabled there
+  {
+    files: ['playwright/**/*.{ts,tsx}'],
+    rules: {
+      // prevent vitest rules from accidentally applying if you broaden patterns later
     },
   },
 ]);

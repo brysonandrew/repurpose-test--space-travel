@@ -7,11 +7,10 @@ import { initialWizardState, loadWizardDraft, clearWizardDraft } from '@/lib/wiz
 import { validateDraft } from '@/lib/validation';
 import type { Destination } from '@/lib/types';
 import WizardShell from '@/app/wizard/shell';
+import WizardBackground from '@/app/wizard/background';
 
 export default function Step3() {
   const router = useRouter();
-
-  // ✅ gate rendering until draft is loaded on client
   const [mounted, setMounted] = useState(false);
 
   const [state, setState] = useState(() => initialWizardState);
@@ -101,8 +100,8 @@ export default function Step3() {
 
   if (bookingId) {
     return (
-      <WizardShell>
-        <div className="mt-14">
+      <WizardBackground>
+        <div className="text-center">
           <h2 className="text-xl font-semibold">Booking Confirmed!</h2>
           <p className="mt-2">
             Your booking ID: <b>{bookingId}</b>
@@ -114,8 +113,15 @@ export default function Step3() {
           >
             Book another trip
           </button>
+          <button
+            type="button"
+            onClick={() => router.push('/')}
+            className="mt-6 underline underline-offset-4"
+          >
+            Go home
+          </button>
         </div>
-      </WizardShell>
+      </WizardBackground>
     );
   }
 

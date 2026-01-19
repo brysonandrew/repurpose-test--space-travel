@@ -1,9 +1,13 @@
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
-  testDir: './playwright',
-  timeout: 30_000,
-  retries: 0,
+  testDir: 'playwright',
+  testMatch: /.*\.spec\.ts/,
+  testIgnore: [
+    '**/*.test.{ts,tsx}',
+    '**/*.spec.{tsx}',
+    'src/**',
+  ],
   use: {
     baseURL: 'http://localhost:3000',
     trace: 'on-first-retry',
@@ -15,7 +19,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'pnpm dev',
+    command: 'pnpm dev -- --webpack',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
   },

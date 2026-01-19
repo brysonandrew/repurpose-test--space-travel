@@ -19,7 +19,7 @@ export function TravelersStep({ travelers, onChange, onAdd, onRemove, errors, co
         {travelers.map((trav, i) => (
           <div
             key={i}
-            className="flex flex-wrap items-center gap-4 rounded-lg border border-zinc-200 bg-white/70 p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900/70"
+            className="flex flex-wrap items-start gap-4 rounded-lg border border-zinc-200 bg-white/70 p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900/70"
           >
             <label className="flex min-w-[170px] flex-1 flex-col">
               <span className="mb-1 font-medium text-zinc-700 dark:text-zinc-200">Full name</span>
@@ -53,7 +53,7 @@ export function TravelersStep({ travelers, onChange, onAdd, onRemove, errors, co
               <button
                 type="button"
                 onClick={() => onRemove(i)}
-                className="ml-2 rounded border border-zinc-200 bg-zinc-100 px-3 py-1 text-xs text-zinc-600 transition-all hover:bg-zinc-200 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700"
+                className="w-full h-full grow rounded border border-zinc-200 bg-zinc-100 px-3 py-1 text-xs text-zinc-600 transition-all hover:bg-zinc-200 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700"
               >
                 Remove
               </button>

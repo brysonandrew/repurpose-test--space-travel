@@ -2,7 +2,8 @@ import { BookingDraft } from './types';
 
 export type WizardAction =
   | { type: 'setDestination'; destinationId: string }
-  | { type: 'setDates'; departureDate: string; returnDate: string }
+  | { type: 'setDepartureDate'; departureDate: string }
+  | { type: 'setReturnDate'; returnDate: string }
   | { type: 'addTraveler' }
   | { type: 'removeTraveler'; index: number }
   | { type: 'updateTraveler'; index: number; traveler: Partial<BookingDraft['travelers'][number]> }
@@ -26,8 +27,10 @@ export function wizardReducer(state: WizardState, action: WizardAction): WizardS
   switch (action.type) {
     case 'setDestination':
       return { ...state, destinationId: action.destinationId };
-    case 'setDates':
-      return { ...state, departureDate: action.departureDate, returnDate: action.returnDate };
+    case 'setDepartureDate':
+      return { ...state, departureDate: action.departureDate };
+    case 'setReturnDate':
+      return { ...state, returnDate: action.returnDate };
     case 'addTraveler':
       if (state.travelers.length >= 5) return state;
       return { ...state, travelers: [...state.travelers, { fullName: '', age: undefined }] };

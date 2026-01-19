@@ -1,6 +1,6 @@
-import React from 'react';
-
 interface DateInputProps {
+  id: string;
+  name: string;
   label: string;
   value: string;
   onChange: (val: string) => void;
@@ -9,11 +9,18 @@ interface DateInputProps {
   error?: string;
 }
 
-export function DateInput({ label, value, onChange, min, max, error }: DateInputProps) {
+export function DateInput({ id, name, label, value, onChange, min, max, error }: DateInputProps) {
   return (
     <div className="flex w-full flex-col gap-1">
-      <label className="mb-1 font-medium text-zinc-700 dark:text-zinc-200">{label}</label>
+      <label
+        htmlFor={id}
+        className="mb-1 font-medium text-zinc-700"
+      >
+        {label}
+      </label>
       <input
+        id={id}
+        name={name}
         type="date"
         value={value}
         min={min}

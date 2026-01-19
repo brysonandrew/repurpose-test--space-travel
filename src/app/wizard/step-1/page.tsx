@@ -48,19 +48,20 @@ export default function Step1() {
         />
         <div className="mt-2 flex flex-col gap-6 sm:flex-row">
           <DateInput
+            id="departureDate"
             label="Departure date"
-            value={state.departureDate}
-            onChange={(date) =>
-              dispatch({ type: 'setDates', departureDate: date, returnDate: state.returnDate })
-            }
+            name="departureDate"
+            value={state.departureDate ?? ''}
+            onChange={(value) => dispatch({ type: 'setDepartureDate', departureDate: value })}
             error={errors.departureDate}
           />
+
           <DateInput
+            id="returnDate"
+            name="returnDate"
             label="Return date"
-            value={state.returnDate}
-            onChange={(date) =>
-              dispatch({ type: 'setDates', departureDate: state.departureDate, returnDate: date })
-            }
+            value={state.returnDate ?? ''}
+            onChange={(value) => dispatch({ type: 'setReturnDate', returnDate: value })}
             min={state.departureDate || undefined}
             error={errors.returnDate}
           />

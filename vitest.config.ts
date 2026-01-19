@@ -9,6 +9,7 @@ export default defineConfig({
     setupFiles: ['./src/test/setup.ts'],
     globals: true,
     coverage: { provider: 'v8' },
+    exclude: ['playwright/**', 'node_modules/**'],
   },
   resolve: {
     alias: {
