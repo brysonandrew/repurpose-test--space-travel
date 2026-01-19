@@ -16,11 +16,9 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Architecture
+## Booking Wizard Architecture Decisions
 
-# Booking Wizard Architecture Decisions
-
-## 1. URL Strategy for Steps
+### 1. URL Strategy for Steps
 
 - **Decision:** Use path-based URLs for wizard steps, e.g. `/wizard/step-1`, `/wizard/step-2`, `/wizard/step-3`
 - **Rationale:**
@@ -28,7 +26,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
   - Works seamlessly with Next.js App Router segment-based routing, which cleanly maps step UI to pages.
   - Makes it trivial for the browser back button to move to previous steps without custom code.
 
-## 2. State Persistence (Back Button & Refresh)
+### 2. State Persistence (Back Button & Refresh)
 
 - **Decision:** Use `localStorage` to persist booking form state (all steps).
 - **Rationale:**
@@ -37,7 +35,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
   - The state is also reflected in the URL (current step), making navigation predictable and robust.
   - This approach de-couples UI navigation from form data, maximizing resilience to accidental reloads or partial step revisits.
 
-## 3. State Management Approach
+### 3. State Management Approach
 
 - **Decision:** Use `useReducer` (React) for in-memory wizard state, with sync to `localStorage` on change.
 - **Rationale:**
@@ -45,7 +43,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
   - `useReducer` is ideal for multi-step wizards with explicit state transitions and cross-field validation.
   - Pure state transition logic is placed in `lib/formReducer.ts` (or equivalent), making it easy to test and reuse outside React.
 
-## 4. Component Boundaries (Per Step)
+### 4. Component Boundaries (Per Step)
 
 - **Decision:**
   - Each wizard step is its own component (e.g. `<DestinationStep />`, `<TravelersStep />`, `<ReviewStep />`)
@@ -56,7 +54,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
   - Clear boundaries enable focused unit and integration tests.
   - Promotes SRP (single responsibility principle) and simplifies future extensibility.
 
-## 5. Testing Strategy (Unit vs Component vs E2E)
+### 5. Testing Strategy (Unit vs Component vs E2E)
 
 - **Decision:**
   - **Unit tests**: All validation and state logic (reducers, validators) tested in isolation.
