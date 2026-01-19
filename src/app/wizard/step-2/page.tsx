@@ -1,28 +1,16 @@
-'use client';
-import React, { useReducer, useEffect } from 'react';
+'use client';;
+import React from 'react';
 import { TravelersStep } from '@/components/wizard/TravelersStep';
-import {
-  wizardReducer,
-  initialWizardState,
-  saveWizardDraft,
-  loadWizardDraft,
-} from '@/lib/wizardState';
 import { validateDraft } from '@/lib/validation';
 import { useRouter } from 'next/navigation';
 import WizardShell from '@/app/wizard/shell';
+import { useWizardDraft } from '@/contexts/WizardDraftContext';
 
 export default function Step2() {
-  const [state, dispatch] = useReducer(
-    wizardReducer,
-    undefined,
-    () => loadWizardDraft() ?? initialWizardState,
-  );
+  const { state, dispatch } = useWizardDraft();
   const router = useRouter();
-  const errors = validateDraft(state);
 
-  useEffect(() => {
-    saveWizardDraft(state);
-  }, [state]);
+  const errors = validateDraft(state);
 
   function handleNext(e: React.FormEvent) {
     e.preventDefault();

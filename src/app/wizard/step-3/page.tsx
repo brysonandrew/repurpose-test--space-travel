@@ -1,19 +1,22 @@
 'use client';
-
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ReviewStep } from '@/components/wizard/ReviewStep';
-import { initialWizardState, loadWizardDraft, clearWizardDraft } from '@/lib/wizardState';
 import { validateDraft } from '@/lib/validation';
 import type { Destination } from '@/lib/types';
 import WizardShell from '@/app/wizard/shell';
 import WizardBackground from '@/app/wizard/background';
+import { useWizardDraft } from '@/contexts/WizardDraftContext';
+import { clearWizardDraft } from '@/lib/draftStorage';
 
 export default function Step3() {
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
 
-  const [state, setState] = useState(() => initialWizardState);
+  const { state } = useWizardDraft();
+
+  const errors = validateDraft(state);
+
   const [destinations, setDestinations] = useState<Destination[]>([]);
 
   const [submitting, setSubmitting] = useState(false);
@@ -22,7 +25,6 @@ export default function Step3() {
   const hasSubmitted = useRef(false);
 
   useEffect(() => {
-    setState(loadWizardDraft() ?? initialWizardState);
     setMounted(true);
   }, []);
 
@@ -34,8 +36,6 @@ export default function Step3() {
         // keep UI stable; optional: set an error state
       });
   }, []);
-
-  const errors = useMemo(() => validateDraft(state), [state]);
 
   function handleBack() {
     router.push('/wizard/step-2');
@@ -93,7 +93,6 @@ export default function Step3() {
     }
   }
 
-  // ✅ critical: server + initial client render match
   if (!mounted) {
     return <div className="min-h-screen" />;
   }
@@ -106,20 +105,22 @@ export default function Step3() {
           <p className="mt-2">
             Your booking ID: <b>{bookingId}</b>
           </p>
-          <button
-            type="button"
-            onClick={() => router.push('/wizard/step-1')}
-            className="mt-6 underline underline-offset-4"
-          >
-            Book another trip
-          </button>
-          <button
-            type="button"
-            onClick={() => router.push('/')}
-            className="mt-6 underline underline-offset-4"
-          >
-            Go home
-          </button>
+          <div className='flex justify-between'>
+            <button
+              type="button"
+              onClick={() => router.push('/wizard/step-1')}
+              className="mt-6 underline underline-offset-4"
+            >
+              Book another trip
+            </button>
+            <button
+              type="button"
+              onClick={() => router.push('/')}
+              className="mt-6 underline underline-offset-4"
+            >
+              Home
+            </button>
+          </div>
         </div>
       </WizardBackground>
     );

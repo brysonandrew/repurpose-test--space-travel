@@ -27,10 +27,10 @@ describe('Wizard Step 1 - Date Validation', () => {
     userEvent.type(returnInput, '2030-01-05'); // Return before departure
 
     // Try to proceed to next step
-    const nextBtn = screen.getByRole('button', { name: /next/i });
+    const nextBtn = screen.getByTestId('wizard-next');
     userEvent.click(nextBtn);
 
     // Assert visible error or that navigation did not trigger (no routing change)
-    expect(screen.getByText(/return date must be after departure/i)).toBeInTheDocument();
+    expect(screen.getByText((_, el) => el?.textContent?.match(/return date must be after departure/i))).toBeInTheDocument();
   });
 });

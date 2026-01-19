@@ -3,11 +3,7 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: 'playwright',
   testMatch: /.*\.spec\.ts/,
-  testIgnore: [
-    '**/*.test.{ts,tsx}',
-    '**/*.spec.{tsx}',
-    'src/**',
-  ],
+  testIgnore: ['**/*.test.{ts,tsx}', '**/*.spec.{tsx}', 'src/**'],
   use: {
     baseURL: 'http://localhost:3000',
     trace: 'on-first-retry',

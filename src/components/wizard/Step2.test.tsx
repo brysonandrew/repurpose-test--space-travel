@@ -23,7 +23,7 @@ describe('Wizard Step 2 - Travelers min/max', () => {
     await user.click(addBtn);
     await user.click(addBtn);
 
-    expect(screen.getAllByLabelText(/full name/i)).toHaveLength(5);
+    expect(screen.getAllByTestId(/traveler-fullname-/)).toHaveLength(5);
     expect(addBtn).toBeDisabled();
   });
 });

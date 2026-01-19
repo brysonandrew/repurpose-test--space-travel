@@ -1,4 +1,3 @@
-import React from 'react';
 import { WizardState } from '../../lib/wizardState';
 import { Destination } from '../../lib/types';
 

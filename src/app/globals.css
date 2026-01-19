@@ -49,3 +49,65 @@ body {
 .accent-primary {
   accent-color: var(--color-primary);
 }
+
+@layer utilities {
+  /* Make calendar icon white in dark mode */
+  .dark-date-icon::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+  /* Disabled states */
+  :where(:disabled, [aria-disabled='true'], [data-disabled='true'], .is-disabled) {
+    pointer-events: none;
+    cursor: not-allowed;
+
+    /* More obvious than opacity alone */
+    opacity: 0.35;
+    filter: grayscale(0.55) saturate(0.35) contrast(0.9) brightness(0.92);
+
+    /* Ensures overlay/pattern can position correctly on anything */
+    position: relative;
+  }
+
+  /* Frosted overlay */
+  :where(:disabled, [aria-disabled='true'], [data-disabled='true'], .is-disabled)::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: color-mix(in srgb, black 35%, transparent);
+    backdrop-filter: blur(1.5px);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  /* Subtle diagonal hatch pattern = instant “disabled” signal */
+  :where(:disabled, [aria-disabled='true'], [data-disabled='true'], .is-disabled)::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-image: repeating-linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.08) 0px,
+      rgba(255, 255, 255, 0.08) 6px,
+      rgba(0, 0, 0, 0) 6px,
+      rgba(0, 0, 0, 0) 12px
+    );
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  /* Kill hover / glow / shard / ants effects when disabled (keep your intent, stronger) */
+  :where(:disabled, [aria-disabled='true'], [data-disabled='true'], .is-disabled):hover,
+  :where(:disabled, [aria-disabled='true'], [data-disabled='true'], .is-disabled):focus,
+  :where(:disabled, [aria-disabled='true'], [data-disabled='true'], .is-disabled):focus-visible {
+    box-shadow: none !important;
+    outline: none !important;
+  }
+
+  /* Optional: make text/icons slightly “muted” even if element has strong text color */
+  :where(:disabled, [aria-disabled='true'], [data-disabled='true'], .is-disabled)
+    :where(svg, span, p, strong) {
+    opacity: 0.85;
+  }
+}

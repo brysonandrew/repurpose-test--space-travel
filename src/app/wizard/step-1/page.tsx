@@ -1,40 +1,23 @@
-'use client';
-import React, { useReducer, useEffect } from 'react';
+'use client';;
+import React from 'react';
 import { DestinationStep } from '@/components/wizard/DestinationStep';
 import { DateInput } from '@/components/ui/DateInput';
-import {
-  wizardReducer,
-  initialWizardState,
-  saveWizardDraft,
-  loadWizardDraft,
-} from '@/lib/wizardState';
 import { validateDraft } from '@/lib/validation';
 import { useRouter } from 'next/navigation';
 import WizardShell from '@/app/wizard/shell';
+import { useWizardDraft } from '@/contexts/WizardDraftContext';
 
 export default function Step1() {
-  const [state, dispatch] = useReducer(
-    wizardReducer,
-    undefined,
-    () => loadWizardDraft() ?? initialWizardState,
-  );
+  const { state, dispatch } = useWizardDraft();
   const router = useRouter();
+
   const errors = validateDraft(state);
 
-  // persist draft to localStorage on state change
-  useEffect(() => {
-    saveWizardDraft(state);
-  }, [state]);
-
-  // Next step navigation
   function handleNext(e: React.FormEvent) {
     e.preventDefault();
-    if (errors.destinationId || errors.departureDate || errors.returnDate) {
-      return;
-    }
+    if (errors.destinationId || errors.departureDate || errors.returnDate) return;
     router.push('/wizard/step-2');
   }
-
   return (
     <WizardShell>
       <form
@@ -69,6 +52,9 @@ export default function Step1() {
         <div className="flex w-full justify-end">
           <button
             type="submit"
+            data-testid="wizard-next"
+            aria-label="Next: Travelers"
+            disabled={state.returnDate <= state.departureDate}
             className="mt-6 rounded-lg bg-zinc-900/80 px-6 py-2 font-bold text-white transition-all hover:bg-zinc-900"
           >
             Next: Travelers →

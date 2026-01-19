@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { StepIndicator } from '@/components/ui/StepIndicator';
 import WizardBackground from '@/app/wizard/background';
 
