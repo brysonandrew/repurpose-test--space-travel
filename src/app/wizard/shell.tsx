@@ -1,7 +1,7 @@
-import { StepIndicator } from '@/components/ui/StepIndicator';
-import WizardBackground from '@/app/wizard/background';
+import { StepIndicator } from "@/components/ui/StepIndicator";
+import WizardBackground from "@/app/wizard/background";
 
-const steps = ['Destination', 'Travelers', 'Review'];
+const steps = ["Destination", "Travelers", "Review"];
 
 /**
  * WizardShell — centers the wizard, applies glassmorphism Card container,
@@ -17,10 +17,7 @@ export default function WizardShell({
   return (
     <WizardBackground>
       <div className="flex flex-col items-center gap-4">
-        <StepIndicator
-          steps={steps}
-          currentIdx={step}
-        />
+        <StepIndicator steps={steps} currentIdx={step} />
         <h1 className="text-2xl font-bold tracking-tight text-zinc-100">
           Intergalactic Booking Wizard
         </h1>

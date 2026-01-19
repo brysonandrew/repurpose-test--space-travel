@@ -2,6 +2,7 @@
   "name": "intergalactic-booking-wizard",
   "version": "0.1.0",
   "private": true,
+  "description": "Book your trip to space",
   "scripts": {
     "dev": "next dev --webpack",
     "build": "next build",

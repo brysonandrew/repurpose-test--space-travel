@@ -1,8 +1,8 @@
-import '@testing-library/jest-dom/vitest';
-import { vi, afterAll, afterEach, beforeAll } from 'vitest';
-import { server } from '@/test/msw/server';
+import "@testing-library/jest-dom/vitest";
+import { vi, afterAll, afterEach, beforeAll } from "vitest";
+import { server } from "@/test/msw/server";
 
-vi.mock('next/navigation', () => {
+vi.mock("next/navigation", () => {
   const push = vi.fn();
   const replace = vi.fn();
   const back = vi.fn();
@@ -12,7 +12,7 @@ vi.mock('next/navigation', () => {
 
   return {
     useRouter: () => ({ push, replace, back, forward, refresh, prefetch }),
-    usePathname: () => '/',
+    usePathname: () => "/",
     useSearchParams: () => new URLSearchParams(),
     useParams: () => ({}),
     redirect: vi.fn(),
@@ -20,6 +20,6 @@ vi.mock('next/navigation', () => {
   };
 });
 
-beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
+beforeAll(() => server.listen({ onUnhandledRequest: "error" }));
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());

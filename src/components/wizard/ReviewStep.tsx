@@ -1,5 +1,5 @@
-import { WizardState } from '@/lib/wizardState';
-import { Destination } from '@/lib/types';
+import { WizardState } from "@/lib/wizardState";
+import { Destination } from "@/lib/types";
 
 interface Props {
   state: WizardState;
@@ -11,22 +11,26 @@ export function ReviewStep({ state, destinations }: Props) {
 
   return (
     <section className="mx-auto flex w-full flex-col gap-6 rounded-xl bg-zinc-900/60 p-6 shadow-sm">
-      <h2 className="text-center text-2xl font-semibold text-zinc-100">Booking Review</h2>
+      <h2 className="text-center text-2xl font-semibold text-zinc-100">
+        Booking Review
+      </h2>
 
       <div className="flex flex-col gap-3 text-zinc-300">
         <div className="flex items-center justify-between">
           <span className="font-medium text-zinc-400">Destination</span>
-          <span className="text-zinc-100">{destination ? destination.name : '-'}</span>
+          <span className="text-zinc-100">
+            {destination ? destination.name : "-"}
+          </span>
         </div>
 
         <div className="flex items-center justify-between">
           <span className="font-medium text-zinc-400">Departure</span>
-          <span className="text-zinc-100">{state.departureDate || '-'}</span>
+          <span className="text-zinc-100">{state.departureDate || "-"}</span>
         </div>
 
         <div className="flex items-center justify-between">
           <span className="font-medium text-zinc-400">Return</span>
-          <span className="text-zinc-100">{state.returnDate || '-'}</span>
+          <span className="text-zinc-100">{state.returnDate || "-"}</span>
         </div>
       </div>
 

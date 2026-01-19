@@ -1,4 +1,4 @@
-import { FocusEventHandler } from 'react';
+import { FocusEventHandler } from "react";
 
 interface DateInputProps {
   id: string;
@@ -25,10 +25,7 @@ export function DateInput({
 }: DateInputProps) {
   return (
     <div className="flex w-full flex-col gap-1">
-      <label
-        htmlFor={id}
-        className="mb-1 font-medium text-zinc-200"
-      >
+      <label htmlFor={id} className="mb-1 font-medium text-zinc-200">
         {label}
       </label>
       <input

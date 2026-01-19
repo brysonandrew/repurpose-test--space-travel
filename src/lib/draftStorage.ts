@@ -1,10 +1,10 @@
 // src/lib/wizardDraftStorage.ts
-import type { WizardState } from '@/lib/wizardState';
+import type { WizardState } from "@/lib/wizardState";
 
-const STORAGE_KEY = 'wizard_draft_v1';
+const STORAGE_KEY = "wizard_draft_v1";
 
 export function saveWizardDraft(state: WizardState) {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
   try {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   } catch {
@@ -13,7 +13,7 @@ export function saveWizardDraft(state: WizardState) {
 }
 
 export function loadWizardDraft(): WizardState | undefined {
-  if (typeof window === 'undefined') return undefined;
+  if (typeof window === "undefined") return undefined;
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
     if (!raw) return undefined;
@@ -24,7 +24,7 @@ export function loadWizardDraft(): WizardState | undefined {
 }
 
 export function clearWizardDraft() {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
   try {
     window.localStorage.removeItem(STORAGE_KEY);
   } catch {

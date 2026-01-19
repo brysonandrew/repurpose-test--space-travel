@@ -1,27 +1,27 @@
-'use client';
+"use client";
 
-import React, { useEffect, useRef, useState, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
-import { ReviewStep } from '@/components/wizard/ReviewStep';
-import { FormAlert } from '@/components/shared/FormAlert';
-import { WizardFooter } from '@/components/shared/WizardFooter';
-import { validateDraft } from '@/lib/validation';
-import type { Destination } from '@/lib/types';
-import WizardShell from '@/app/wizard/shell';
-import WizardBackground from '@/app/wizard/background';
-import { useWizardDraft } from '@/contexts/WizardDraftContext';
-import { clearWizardDraft } from '@/lib/draftStorage';
+import React, { useEffect, useRef, useState, useMemo } from "react";
+import { useRouter } from "next/navigation";
+import { ReviewStep } from "@/components/wizard/ReviewStep";
+import { FormAlert } from "@/components/shared/FormAlert";
+import { WizardFooter } from "@/components/shared/WizardFooter";
+import { validateDraft } from "@/lib/validation";
+import type { Destination } from "@/lib/types";
+import WizardShell from "@/app/wizard/shell";
+import WizardBackground from "@/app/wizard/background";
+import { useWizardDraft } from "@/contexts/WizardDraftContext";
+import { clearWizardDraft } from "@/lib/draftStorage";
 
 type BookingResponse = { success: true; bookingId: string };
 
 function isBookingResponse(x: unknown): x is BookingResponse {
   return (
-    typeof x === 'object' &&
+    typeof x === "object" &&
     x !== null &&
     /* eslint-disable @typescript-eslint/no-explicit-any */
     (x as any).success === true &&
     /* eslint-disable @typescript-eslint/no-explicit-any */
-    typeof (x as any).bookingId === 'string'
+    typeof (x as any).bookingId === "string"
   );
 }
 
@@ -39,14 +39,14 @@ export default function Step3() {
   const isInvalid = Object.keys(currentErrors).length !== 0;
 
   useEffect(() => {
-    fetch('/api/destinations')
+    fetch("/api/destinations")
       .then((res) => res.json())
       .then(setDestinations)
       .catch(() => {});
   }, []);
 
   function handleBack() {
-    router.push('/wizard/step-2');
+    router.push("/wizard/step-2");
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -56,7 +56,7 @@ export default function Step3() {
     // Validate at the moment of submit
     const nextErrors = validateDraft(state);
     if (Object.keys(nextErrors).length !== 0) {
-      setError('Please fix all validation errors and complete all steps.');
+      setError("Please fix all validation errors and complete all steps.");
       return;
     }
 
@@ -71,9 +71,9 @@ export default function Step3() {
         travelers: state.travelers,
       };
 
-      const res = await fetch('/api/bookings', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/bookings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
@@ -81,14 +81,14 @@ export default function Step3() {
 
       const data: unknown = await res.json();
       if (!isBookingResponse(data)) {
-        throw new Error('Booking failed: No booking ID returned');
+        throw new Error("Booking failed: No booking ID returned");
       }
 
       setBookingId(data.bookingId);
       clearWizardDraft();
       hasSubmitted.current = true;
     } catch (e: unknown) {
-      setError(e instanceof Error ? e.message : 'Submit failed');
+      setError(e instanceof Error ? e.message : "Submit failed");
     } finally {
       setSubmitting(false);
     }
@@ -105,14 +105,14 @@ export default function Step3() {
           <div className="flex justify-between">
             <button
               type="button"
-              onClick={() => router.push('/wizard/step-1')}
+              onClick={() => router.push("/wizard/step-1")}
               className="mt-6 underline underline-offset-4"
             >
               Book another trip
             </button>
             <button
               type="button"
-              onClick={() => router.push('/')}
+              onClick={() => router.push("/")}
               className="mt-6 underline underline-offset-4"
             >
               Home
@@ -125,27 +125,16 @@ export default function Step3() {
 
   return (
     <WizardShell>
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-10"
-      >
-        <ReviewStep
-          state={state}
-          destinations={destinations}
-        />
+      <form onSubmit={handleSubmit} className="flex flex-col gap-10">
+        <ReviewStep state={state} destinations={destinations} />
 
-        {error && (
-          <FormAlert
-            message={error}
-            className="mt-3"
-          />
-        )}
+        {error && <FormAlert message={error} className="mt-3" />}
 
         <WizardFooter
           leftButtonLabel="← Back"
           onLeftClick={handleBack}
           leftDisabled={submitting}
-          rightButtonChildren={submitting ? 'Booking...' : 'Confirm and Book'}
+          rightButtonChildren={submitting ? "Booking..." : "Confirm and Book"}
           rightDisabled={submitting || isInvalid}
         />
       </form>

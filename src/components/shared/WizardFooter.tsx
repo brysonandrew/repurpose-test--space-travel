@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 type WizardFooterProps = {
   leftButtonLabel?: string;
@@ -12,23 +12,23 @@ type WizardFooterProps = {
   rightDisabled?: boolean;
   rightDataTestId?: string;
   rightAriaLabel?: string;
-  rightButtonType?: 'button' | 'submit';
+  rightButtonType?: "button" | "submit";
   className?: string;
 };
 
 export const WizardFooter: React.FC<WizardFooterProps> = ({
-  leftButtonLabel = '← Back',
+  leftButtonLabel = "← Back",
   onLeftClick,
   leftDisabled = false,
   hideLeftButton = false,
-  rightButtonLabel = 'Next',
+  rightButtonLabel = "Next",
   rightButtonChildren,
   onRightClick,
   rightDisabled = false,
   rightDataTestId,
   rightAriaLabel,
-  rightButtonType = 'submit',
-  className = '',
+  rightButtonType = "submit",
+  className = "",
 }) => (
   <div className={`mt-7 flex w-full justify-between gap-4 ${className}`}>
     {!hideLeftButton ? (
@@ -42,7 +42,7 @@ export const WizardFooter: React.FC<WizardFooterProps> = ({
       </button>
     ) : (
       <span />
-    )}{' '}
+    )}{" "}
     {/* keep space for button layout */}
     <button
       type={rightButtonType}

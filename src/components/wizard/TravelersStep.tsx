@@ -1,5 +1,5 @@
-import { TravelerTouched } from '@/app/wizard/step-2/page';
-import { Traveler } from '@/lib/types';
+import { Step2Touched } from "@/app/wizard/step-2/page";
+import { Traveler } from "@/lib/types";
 
 interface Props {
   travelers: Traveler[];
@@ -10,7 +10,7 @@ interface Props {
   onNameBlur(index: number): void;
   onAgeBlur(index: number): void;
   countError?: string;
-  touched: TravelerTouched;
+  touched: Step2Touched;
 }
 
 export function TravelersStep({
@@ -26,7 +26,9 @@ export function TravelersStep({
 }: Props) {
   return (
     <section className="flex flex-col gap-6">
-      <h2 className="mb-2 text-xl font-semibold text-zinc-900 dark:text-zinc-100">Travelers</h2>
+      <h2 className="mb-2 text-xl font-semibold text-zinc-900 dark:text-zinc-100">
+        Travelers
+      </h2>
 
       {countError && <div className="text-red-500">{countError}</div>}
 
@@ -58,7 +60,9 @@ export function TravelersStep({
                     className="focus-visible:ring-primary/60 rounded-lg border border-zinc-200 bg-white/80 px-3 py-2 shadow-sm transition-all outline-none focus-visible:ring-2 dark:border-zinc-700 dark:bg-zinc-900/70"
                   />
                   {nameTouched && errors[i]?.fullName && (
-                    <span className="mt-1 text-sm text-red-400">{errors[i].fullName}</span>
+                    <span className="mt-1 text-sm text-red-400">
+                      {errors[i].fullName}
+                    </span>
                   )}
                 </label>
 
@@ -66,19 +70,25 @@ export function TravelersStep({
                   htmlFor={`age-${i}`}
                   className="flex w-12 flex-col sm:w-20"
                 >
-                  <span className="mb-1 font-medium text-zinc-700 dark:text-zinc-200">Age</span>
+                  <span className="mb-1 font-medium text-zinc-700 dark:text-zinc-200">
+                    Age
+                  </span>
                   <input
                     id={`age-${i}`}
                     name="age"
                     type="number"
                     min={0}
-                    value={trav.age ?? ''}
+                    value={trav.age ?? ""}
                     onBlur={() => onAgeBlur(i)}
-                    onChange={(e) => onChange(i, { age: Number(e.target.value) })}
+                    onChange={(e) =>
+                      onChange(i, { age: Number(e.target.value) })
+                    }
                     className="focus-visible:ring-primary/60 w-full rounded-lg border border-zinc-200 bg-white/80 px-3 py-2 font-mono shadow-sm transition-all outline-none focus-visible:ring-2 dark:border-zinc-700 dark:bg-zinc-900/70"
                   />
                   {ageTouched && errors[i]?.age && (
-                    <span className="mt-1 text-sm text-red-400">{errors[i].age}</span>
+                    <span className="mt-1 text-sm text-red-400">
+                      {errors[i].age}
+                    </span>
                   )}
                 </label>
               </div>

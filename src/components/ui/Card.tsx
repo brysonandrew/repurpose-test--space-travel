@@ -1,27 +1,26 @@
-import clsx from 'clsx';
+import React from "react";
+import clsx from "clsx";
 
-/**
- * Card component — glassmorphism panel for use in wizard container and cards.
- * Applies soft blur, neutral background, border, and subtle shadow.
- * Extend with extra classes as needed for selected/pressed.
- */
-export function Card({
+type Props<T extends React.ElementType> = React.PropsWithChildren<{
+  as?: T;
+  className?: string;
+}> &
+  Omit<React.ComponentPropsWithoutRef<T>, "as" | "children" | "className">;
+
+export function Card<T extends React.ElementType = "div">({
   children,
-  className = '',
-  as: Tag = 'div',
+  className,
+  as,
   ...props
-}: React.PropsWithChildren<
-  {
-    className?: string;
-    as?: keyof JSX.IntrinsicElements;
-  } & React.HTMLAttributes<HTMLElement>
->) {
+}: Props<T>) {
+  const Tag = (as ?? "div") as React.ElementType;
+
   return (
     <Tag
       className={clsx(
-        'rounded-xl border border-zinc-800 bg-zinc-900/60 shadow-sm backdrop-blur-md',
-        'transition-all duration-200',
-        className,
+        "rounded-xl border border-zinc-800 bg-zinc-900/60 shadow-sm backdrop-blur-md",
+        "transition-all duration-200",
+        className
       )}
       {...props}
     >

@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import clsx from "clsx";
 
 export interface Props {
   count?: number;
@@ -7,13 +7,13 @@ export interface Props {
 }
 export const Skeleton = ({ count = 6, className, itemClassName }: Props) => {
   return (
-    <ul className={clsx('flex flex-col gap-4', className)}>
+    <ul className={clsx("flex flex-col gap-4", className)}>
       {Array.from({ length: count }).map((_, index) => (
         <li
           key={index}
           className={clsx(
-            'rounded-lg border border-zinc-700 bg-zinc-900/60 px-5 py-4 shadow-sm backdrop-blur-sm',
-            itemClassName,
+            "rounded-lg border border-zinc-700 bg-zinc-900/60 px-5 py-4 shadow-sm backdrop-blur-sm",
+            itemClassName
           )}
         >
           <div className="flex items-center gap-3">

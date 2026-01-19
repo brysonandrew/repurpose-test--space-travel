@@ -1,0 +1,21 @@
+const config = {
+  semi: true,
+  singleQuote: true,
+  jsxSingleQuote: false,
+
+  printWidth: 100,
+  tabWidth: 2,
+  useTabs: false,
+
+  trailingComma: "all",
+  bracketSpacing: true,
+  bracketSameLine: false,
+  arrowParens: "always",
+
+  singleAttributePerLine: true,
+
+  endOfLine: "lf",
+
+  plugins: ["prettier-plugin-tailwindcss"],
+};
+export default config;

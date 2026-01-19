@@ -111,10 +111,6 @@ It was a well-scoped, meaningful test for a coder's Next.js ability.
 
 ## If I had more time
 
-## If I had more time
-
-## If I had more time
-
 - Increase test coverage, focusing on integration and failure states
 - Standardise icons using SVGs for better scalability and styling control
 - Refactor form state management to react-hook-form for improved performance and maintainability

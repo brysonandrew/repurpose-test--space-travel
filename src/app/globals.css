@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 :root {
   --background: #0a0a0a;
@@ -49,7 +49,12 @@ body {
     filter: invert(1);
   }
   /* Disabled states */
-  :where(:disabled, [aria-disabled='true'], [data-disabled='true'], .is-disabled) {
+  :where(
+      :disabled,
+      [aria-disabled="true"],
+      [data-disabled="true"],
+      .is-disabled
+    ) {
     pointer-events: none;
     cursor: not-allowed;
 
@@ -62,8 +67,13 @@ body {
   }
 
   /* Frosted overlay */
-  :where(:disabled, [aria-disabled='true'], [data-disabled='true'], .is-disabled)::before {
-    content: '';
+  :where(
+      :disabled,
+      [aria-disabled="true"],
+      [data-disabled="true"],
+      .is-disabled
+    )::before {
+    content: "";
     position: absolute;
     inset: 0;
     border-radius: inherit;
@@ -74,8 +84,13 @@ body {
   }
 
   /* Subtle diagonal hatch pattern = instant “disabled” signal */
-  :where(:disabled, [aria-disabled='true'], [data-disabled='true'], .is-disabled)::after {
-    content: '';
+  :where(
+      :disabled,
+      [aria-disabled="true"],
+      [data-disabled="true"],
+      .is-disabled
+    )::after {
+    content: "";
     position: absolute;
     inset: 0;
     border-radius: inherit;
@@ -91,15 +106,35 @@ body {
   }
 
   /* Kill hover / glow / shard / ants effects when disabled (keep your intent, stronger) */
-  :where(:disabled, [aria-disabled='true'], [data-disabled='true'], .is-disabled):hover,
-  :where(:disabled, [aria-disabled='true'], [data-disabled='true'], .is-disabled):focus,
-  :where(:disabled, [aria-disabled='true'], [data-disabled='true'], .is-disabled):focus-visible {
+  :where(
+      :disabled,
+      [aria-disabled="true"],
+      [data-disabled="true"],
+      .is-disabled
+    ):hover,
+  :where(
+      :disabled,
+      [aria-disabled="true"],
+      [data-disabled="true"],
+      .is-disabled
+    ):focus,
+  :where(
+      :disabled,
+      [aria-disabled="true"],
+      [data-disabled="true"],
+      .is-disabled
+    ):focus-visible {
     box-shadow: none !important;
     outline: none !important;
   }
 
   /* Optional: make text/icons slightly “muted” even if element has strong text color */
-  :where(:disabled, [aria-disabled='true'], [data-disabled='true'], .is-disabled)
+  :where(
+      :disabled,
+      [aria-disabled="true"],
+      [data-disabled="true"],
+      .is-disabled
+    )
     :where(svg, span, p, strong) {
     opacity: 0.85;
   }
