@@ -1,4 +1,4 @@
-import { Traveler } from '../../lib/types';
+import { Traveler } from '@/lib/types';
 
 interface Props {
   travelers: Traveler[];
@@ -6,6 +6,8 @@ interface Props {
   onAdd: () => void;
   onRemove: (index: number) => void;
   errors?: Array<{ fullName?: string; age?: string }>;
+  onNameBlur(index: number): void;
+  onAgeBlur(index: number): void;
   countError?: string;
 }
 
@@ -14,6 +16,8 @@ export function TravelersStep({
   onChange,
   onAdd,
   onRemove,
+  onAgeBlur,
+  onNameBlur,
   errors = [],
   countError,
 }: Props) {
@@ -40,6 +44,7 @@ export function TravelersStep({
                   name="fullName"
                   type="text"
                   value={trav.fullName}
+                  onBlur={() => onNameBlur(i)}
                   onChange={(e) => onChange(i, { fullName: e.target.value })}
                   className="focus-visible:ring-primary/60 rounded-lg border border-zinc-200 bg-white/80 px-3 py-2 shadow-sm transition-all outline-none focus-visible:ring-2 dark:border-zinc-700 dark:bg-zinc-900/70"
                 />
@@ -50,13 +55,15 @@ export function TravelersStep({
 
               <label
                 htmlFor={`age-${i}`}
-                className="w-12 flex sm:w-20 flex-col"
+                className="flex w-12 flex-col sm:w-20"
               >
                 <span className="mb-1 font-medium text-zinc-700 dark:text-zinc-200">Age</span>
                 <input
                   id={`age-${i}`}
                   name="age"
                   type="number"
+                  min={0}
+                  onBlur={() => onAgeBlur(i)}
                   onChange={(e) => onChange(i, { age: parseFloat(e.target.value) })}
                   className="focus-visible:ring-primary/60 w-full rounded-lg border border-zinc-200 bg-white/80 px-3 py-2 font-mono shadow-sm transition-all outline-none focus-visible:ring-2 dark:border-zinc-700 dark:bg-zinc-900/70"
                 />

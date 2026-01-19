@@ -18,14 +18,16 @@ type WizardDraftProviderProps = {
   children: React.ReactNode;
   hydrate?: boolean;
   persist?: boolean;
+  initialState?: WizardState;
 };
 
 export const WizardDraftProvider = ({
   children,
   hydrate = true,
   persist = true,
+  initialState,
 }: WizardDraftProviderProps) => {
-  const [state, dispatch] = useReducer(wizardReducer, initialWizardState);
+  const [state, dispatch] = useReducer(wizardReducer, initialState ?? initialWizardState);
   const hydratedRef = useRef(false);
 
   useEffect(() => {
@@ -54,11 +56,7 @@ export const WizardDraftProvider = ({
     clear: () => clearWizardDraft(),
   };
 
-  return (
-    <WizardDraftContext.Provider value={value}>
-      {children}
-    </WizardDraftContext.Provider>
-  );
+  return <WizardDraftContext.Provider value={value}>{children}</WizardDraftContext.Provider>;
 };
 
 export const useWizardDraft = (): WizardDraftContextValue => {

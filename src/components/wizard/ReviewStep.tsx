@@ -1,5 +1,5 @@
-import { WizardState } from '../../lib/wizardState';
-import { Destination } from '../../lib/types';
+import { WizardState } from '@/lib/wizardState';
+import { Destination } from '@/lib/types';
 
 interface Props {
   state: WizardState;

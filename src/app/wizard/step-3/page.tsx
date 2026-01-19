@@ -1,5 +1,6 @@
 'use client';
-import React, { useEffect, useRef, useState } from 'react';
+
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { ReviewStep } from '@/components/wizard/ReviewStep';
 import { validateDraft } from '@/lib/validation';
@@ -9,32 +10,37 @@ import WizardBackground from '@/app/wizard/background';
 import { useWizardDraft } from '@/contexts/WizardDraftContext';
 import { clearWizardDraft } from '@/lib/draftStorage';
 
+type BookingResponse = { success: true; bookingId: string };
+
+function isBookingResponse(x: unknown): x is BookingResponse {
+  return (
+    typeof x === 'object' &&
+    x !== null &&
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+    (x as any).success === true &&
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+    typeof (x as any).bookingId === 'string'
+  );
+}
+
 export default function Step3() {
   const router = useRouter();
-  const [mounted, setMounted] = useState(false);
-
   const { state } = useWizardDraft();
 
-  const errors = validateDraft(state);
-
   const [destinations, setDestinations] = useState<Destination[]>([]);
-
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [bookingId, setBookingId] = useState<string | null>(null);
   const hasSubmitted = useRef(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const currentErrors = useMemo(() => validateDraft(state), [state]);
+  const isInvalid = Object.keys(currentErrors).length !== 0;
 
   useEffect(() => {
     fetch('/api/destinations')
       .then((res) => res.json())
       .then(setDestinations)
-      .catch(() => {
-        // keep UI stable; optional: set an error state
-      });
+      .catch(() => {});
   }, []);
 
   function handleBack() {
@@ -45,15 +51,17 @@ export default function Step3() {
     e.preventDefault();
     setError(null);
 
-    if (Object.keys(errors).length !== 0) {
+    // Validate at the moment of submit
+    const nextErrors = validateDraft(state);
+    if (Object.keys(nextErrors).length !== 0) {
       setError('Please fix all validation errors and complete all steps.');
       return;
     }
+
     if (submitting || hasSubmitted.current) return;
 
     setSubmitting(true);
     try {
-      // ✅ send payload explicitly (avoid wizard-only fields)
       const payload = {
         destinationId: state.destinationId,
         departureDate: state.departureDate,
@@ -70,31 +78,18 @@ export default function Step3() {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
       const data: unknown = await res.json();
-      if (
-        typeof data === 'object' &&
-        data !== null &&
-        // @ts-expect-error runtime narrowing
-        data.success === true &&
-        // @ts-expect-error runtime narrowing
-        typeof data.bookingId === 'string'
-      ) {
-        // @ts-expect-error runtime narrowing
-        setBookingId(data.bookingId);
-        clearWizardDraft();
-        hasSubmitted.current = true;
-      } else {
+      if (!isBookingResponse(data)) {
         throw new Error('Booking failed: No booking ID returned');
       }
+
+      setBookingId(data.bookingId);
+      clearWizardDraft();
+      hasSubmitted.current = true;
     } catch (e: unknown) {
-      const msg = e instanceof Error ? e.message : 'Submit failed';
-      setError(msg);
+      setError(e instanceof Error ? e.message : 'Submit failed');
     } finally {
       setSubmitting(false);
     }
-  }
-
-  if (!mounted) {
-    return <div className="min-h-screen" />;
   }
 
   if (bookingId) {
@@ -105,7 +100,7 @@ export default function Step3() {
           <p className="mt-2">
             Your booking ID: <b>{bookingId}</b>
           </p>
-          <div className='flex justify-between'>
+          <div className="flex justify-between">
             <button
               type="button"
               onClick={() => router.push('/wizard/step-1')}
@@ -136,7 +131,16 @@ export default function Step3() {
           state={state}
           destinations={destinations}
         />
-        {error && <div className="mt-3 text-red-500">{error}</div>}
+
+        {error && (
+          <div
+            role="alert"
+            className="mt-3 text-red-500"
+          >
+            {error}
+          </div>
+        )}
+
         <div className="mt-7 flex w-full justify-between gap-4">
           <button
             type="button"
@@ -146,9 +150,10 @@ export default function Step3() {
           >
             ← Back
           </button>
+
           <button
             type="submit"
-            disabled={submitting}
+            disabled={submitting || isInvalid}
             className="rounded-lg bg-zinc-900/80 px-6 py-2 font-bold text-white transition-all hover:bg-zinc-900 disabled:opacity-50"
           >
             {submitting ? 'Booking...' : 'Confirm and Book'}

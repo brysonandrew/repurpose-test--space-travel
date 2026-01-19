@@ -1,14 +1,16 @@
-import { useEffect, useState } from 'react';
-import { Destination } from '../../lib/types';
+import { FocusEventHandler, useEffect, useState } from 'react';
+import { Destination } from '@/lib/types';
 import clsx from 'clsx';
 
 interface Props {
   value: string;
   onChange: (id: string) => void;
   error?: string;
+  onBlur:FocusEventHandler<HTMLInputElement>
+
 }
 
-export function DestinationStep({ value, onChange, error }: Props) {
+export function DestinationStep({ value, onBlur, onChange, error }: Props) {
   const [destinations, setDestinations] = useState<Destination[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -58,6 +60,7 @@ export function DestinationStep({ value, onChange, error }: Props) {
                     value={d.id}
                     checked={value === d.id}
                     onChange={() => onChange(d.id)}
+                    onBlur={onBlur}
                     className="accent-primary focus-visible:ring-primary/60 mr-4 focus:outline-none focus-visible:ring-2"
                   />
                   <div className="flex flex-col">
