@@ -9,9 +9,7 @@ import Step2 from '@/app/wizard/step-2/page';
 import '@/test/setup';
 import { renderWithWizard } from '@/test/utils/renderWithWizard';
 
-const INIT_STATE={
-  
-}
+const INIT_STATE = {};
 
 describe('Wizard Step 2 - Travelers min/max', () => {
   it('requires at least 1 traveler (Remove is disabled when one traveler)', async () => {

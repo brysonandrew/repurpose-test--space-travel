@@ -19,7 +19,7 @@ export function Card({
   return (
     <Tag
       className={clsx(
-        'rounded-xl border border-zinc-200 bg-white/60 shadow-sm backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-900/60',
+        'rounded-xl border border-zinc-800 bg-zinc-900/60 shadow-sm backdrop-blur-md',
         'transition-all duration-200',
         className,
       )}

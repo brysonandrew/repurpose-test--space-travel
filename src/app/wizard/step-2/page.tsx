@@ -2,12 +2,14 @@
 
 import React, { useMemo, useState } from 'react';
 import { TravelersStep } from '@/components/wizard/TravelersStep';
+import { FormAlert } from '@/components/shared/FormAlert';
+import { WizardFooter } from '@/components/shared/WizardFooter';
 import { validateDraft } from '@/lib/validation';
 import { useRouter } from 'next/navigation';
 import WizardShell from '@/app/wizard/shell';
 import { useWizardDraft } from '@/contexts/WizardDraftContext';
 
-type TravelerTouched = Array<{ fullName?: boolean; age?: boolean }>;
+export type TravelerTouched = Array<{ fullName?: boolean; age?: boolean }>;
 
 export default function Step2() {
   const { state, dispatch } = useWizardDraft();
@@ -20,7 +22,7 @@ export default function Step2() {
 
   const hasErrors = Boolean(
     errors.travelersCount ||
-      (errors.travelers && errors.travelers.some((t) => Boolean(t?.fullName || t?.age))),
+    (errors.travelers && errors.travelers.some((t) => Boolean(t?.fullName || t?.age))),
   );
 
   const markTouched = (index: number, field: 'fullName' | 'age') => {
@@ -35,9 +37,9 @@ export default function Step2() {
     hasTriedSubmit || Boolean(touched[index]?.[field]);
 
   // Filter down errors passed to TravelersStep so it only shows touched fields (or submit attempted)
-  const visibleTravelerErrors = (errors.travelers ?? []).map((tErr, idx) => ({
-    fullName: shouldShowTravelerError(idx, 'fullName') ? tErr?.fullName : undefined,
-    age: shouldShowTravelerError(idx, 'age') ? tErr?.age : undefined,
+  const visibleTravelerErrors = (errors.travelers ?? []).map((tErr, index) => ({
+    fullName: shouldShowTravelerError(index, 'fullName') ? tErr?.fullName : undefined,
+    age: shouldShowTravelerError(index, 'age') ? tErr?.age : undefined,
   }));
 
   const visibleCountError = hasTriedSubmit ? errors.travelersCount : undefined;
@@ -65,17 +67,16 @@ export default function Step2() {
 
   return (
     <WizardShell>
-      <form onSubmit={handleNext} className="flex flex-col gap-8">
+      <form
+        onSubmit={handleNext}
+        className="flex flex-col gap-8"
+      >
         {hasTriedSubmit && hasErrors && (
-          <div
-            role="alert"
-            className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-900/40 dark:bg-red-950/30 dark:text-red-200"
-          >
-            Please fix the traveler details before continuing.
-          </div>
+          <FormAlert message="Please fix the traveler details before continuing." />
         )}
 
         <TravelersStep
+          touched={touched}
           travelers={state.travelers}
           onChange={(idx, traveler) => dispatch({ type: 'updateTraveler', index: idx, traveler })}
           onAdd={() => dispatch({ type: 'addTraveler' })}
@@ -86,23 +87,12 @@ export default function Step2() {
           onAgeBlur={(idx) => markTouched(idx, 'age')}
         />
 
-        <div className="mt-7 flex w-full justify-between gap-4">
-          <button
-            type="button"
-            onClick={handleBack}
-            className="rounded-lg border border-zinc-200 bg-white/70 px-6 py-2 font-medium text-zinc-900 transition-all hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900/60 dark:text-zinc-100 dark:hover:bg-zinc-800"
-          >
-            ← Back
-          </button>
-
-          <button
-            type="submit"
-            disabled={hasErrors}
-            className="rounded-lg bg-zinc-900/80 px-6 py-2 font-bold text-white transition-all hover:bg-zinc-900 disabled:opacity-40"
-          >
-            Next: Review →
-          </button>
-        </div>
+        <WizardFooter
+          leftButtonLabel="← Back"
+          onLeftClick={handleBack}
+          rightButtonLabel="Next: Review →"
+          rightDisabled={hasErrors}
+        />
       </form>
     </WizardShell>
   );

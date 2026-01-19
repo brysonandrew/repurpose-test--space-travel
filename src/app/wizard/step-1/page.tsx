@@ -2,6 +2,8 @@
 
 import React, { useMemo, useState } from 'react';
 import { DestinationStep } from '@/components/wizard/DestinationStep';
+import { FormAlert } from '@/components/shared/FormAlert';
+import { WizardFooter } from '@/components/shared/WizardFooter';
 import { DateInput } from '@/components/ui/DateInput';
 import { validateDraft } from '@/lib/validation';
 import { useRouter } from 'next/navigation';
@@ -35,16 +37,17 @@ export default function Step1() {
 
   return (
     <WizardShell>
-      <form onSubmit={handleNext} className="flex flex-col gap-8">
+      <form
+        onSubmit={handleNext}
+        className="flex flex-col gap-8"
+      >
         {hasTriedSubmit && hasErrors && (
-          <div role="alert" className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-            Please fix the highlighted fields to continue.
-          </div>
+          <FormAlert message="Please fix the highlighted fields to continue." />
         )}
 
         <DestinationStep
           value={state.destinationId}
-          onChange={(destinationId) => dispatch({ type: 'setDestination', destinationId })}
+          onChange={(destinationId: string) => dispatch({ type: 'setDestination', destinationId })}
           onBlur={() => setTouched((t) => ({ ...t, destinationId: true }))}
           error={showError('destinationId') ? errors.destinationId : undefined}
         />
@@ -72,15 +75,12 @@ export default function Step1() {
           />
         </div>
 
-        <div className="flex w-full justify-end">
-          <button
-            type="submit"
-            disabled={hasErrors}
-            className="mt-6 rounded-lg bg-zinc-900/80 px-6 py-2 font-bold text-white disabled:opacity-40"
-          >
-            Next: Travelers →
-          </button>
-        </div>
+        <WizardFooter
+          hideLeftButton
+          rightButtonLabel="Next: Travelers →"
+          rightDisabled={hasErrors}
+          rightDataTestId="wizard-next"
+        />
       </form>
     </WizardShell>
   );

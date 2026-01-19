@@ -6,8 +6,7 @@ interface Props {
   value: string;
   onChange: (id: string) => void;
   error?: string;
-  onBlur:FocusEventHandler<HTMLInputElement>
-
+  onBlur: FocusEventHandler<HTMLInputElement>;
 }
 
 export function DestinationStep({ value, onBlur, onChange, error }: Props) {
@@ -36,9 +35,7 @@ export function DestinationStep({ value, onBlur, onChange, error }: Props) {
 
   return (
     <section className="flex flex-col gap-6">
-      <h2 className="mb-2 text-xl font-semibold text-zinc-900 dark:text-zinc-100">
-        Choose your destination
-      </h2>
+      <h2 className="mb-2 text-xl font-semibold text-zinc-100">Choose your destination</h2>
       {loading && <div className="text-zinc-500">Loading destinations…</div>}
       {loadError && <div className="text-red-500">Error: {loadError}</div>}
       {!loading && !loadError && (
@@ -49,8 +46,8 @@ export function DestinationStep({ value, onBlur, onChange, error }: Props) {
                 <div
                   className={clsx(
                     value === d.id
-                      ? 'ring-primary/40 border-primary bg-white/80 ring-2 dark:bg-zinc-900/70'
-                      : 'border-zinc-200 bg-white/60 hover:bg-white/80 dark:border-zinc-700 dark:bg-zinc-900/60 dark:hover:bg-zinc-900/80',
+                      ? 'ring-primary/40 border-primary bg-zinc-900/70 ring-2'
+                      : 'border-zinc-700 bg-zinc-900/60 hover:bg-zinc-900/80',
                     'flex items-center gap-3 rounded-lg border px-5 py-4 shadow-sm backdrop-blur-sm transition-all duration-150 select-none',
                   )}
                 >
@@ -64,11 +61,9 @@ export function DestinationStep({ value, onBlur, onChange, error }: Props) {
                     className="accent-primary focus-visible:ring-primary/60 mr-4 focus:outline-none focus-visible:ring-2"
                   />
                   <div className="flex flex-col">
-                    <span className="font-medium text-zinc-900 dark:text-zinc-100">{d.name}</span>
+                    <span className="font-medium text-zinc-100">{d.name}</span>
                     {d.description && (
-                      <span className="text-sm text-zinc-500 dark:text-zinc-400">
-                        {d.description}
-                      </span>
+                      <span className="text-sm text-zinc-400">{d.description}</span>
                     )}
                   </div>
                 </div>

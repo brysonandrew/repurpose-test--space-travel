@@ -5,9 +5,7 @@ import Step3 from '@/app/wizard/step-3/page';
 import { renderWithWizard } from '@/test/utils/renderWithWizard';
 import '@/test/setup';
 
-const INIT_STATE={
-  
-}
+const INIT_STATE = {};
 
 const debug = (...args: any[]) => {
   console.log('[TEST DEBUG]', ...args);

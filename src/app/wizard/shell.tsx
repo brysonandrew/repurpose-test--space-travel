@@ -21,7 +21,7 @@ export default function WizardShell({
           steps={steps}
           currentIdx={step}
         />
-        <h1 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+        <h1 className="text-2xl font-bold tracking-tight text-zinc-100">
           Intergalactic Booking Wizard
         </h1>
       </div>

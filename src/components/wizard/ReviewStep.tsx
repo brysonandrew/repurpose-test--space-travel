@@ -7,35 +7,45 @@ interface Props {
 }
 
 export function ReviewStep({ state, destinations }: Props) {
-  const dest = destinations.find((d) => d.id === state.destinationId);
+  const destination = destinations.find((d) => d.id === state.destinationId);
+
   return (
-    <section className="flex flex-col gap-6">
-      <h2 className="mb-2 text-xl font-semibold text-zinc-900 dark:text-zinc-100">
-        Booking Review
-      </h2>
-      <div className="mb-2">
-        <span className="font-semibold text-zinc-700 dark:text-zinc-300">Destination:</span>{' '}
-        <span>{dest ? dest.name : '-'}</span>
+    <section className="mx-auto flex max-w-nav flex-col gap-6 rounded-xl bg-zinc-900/60 p-6 shadow-sm">
+      <h2 className="text-center text-2xl font-semibold text-zinc-100">Booking Review</h2>
+
+      <div className="flex flex-col gap-3 text-zinc-300">
+        <div className="flex items-center justify-between">
+          <span className="font-medium text-zinc-400">Destination</span>
+          <span className="text-zinc-100">{destination ? destination.name : '-'}</span>
+        </div>
+
+        <div className="flex items-center justify-between">
+          <span className="font-medium text-zinc-400">Departure</span>
+          <span className="text-zinc-100">{state.departureDate || '-'}</span>
+        </div>
+
+        <div className="flex items-center justify-between">
+          <span className="font-medium text-zinc-400">Return</span>
+          <span className="text-zinc-100">{state.returnDate || '-'}</span>
+        </div>
       </div>
-      <div className="mb-2">
-        <span className="font-semibold text-zinc-700 dark:text-zinc-300">Departure:</span>{' '}
-        <span>{state.departureDate || '-'}</span>
-        <br />
-        <span className="font-semibold text-zinc-700 dark:text-zinc-300">Return:</span>{' '}
-        <span>{state.returnDate || '-'}</span>
-      </div>
-      <div>
-        <span className="font-semibold text-zinc-700 dark:text-zinc-300">Travelers:</span>
-        <ol className="mt-1 ml-4 list-decimal text-zinc-700 dark:text-zinc-300">
-          {state.travelers.map((trav, i) => (
+
+      <div className="border-t border-zinc-700 pt-4">
+        <h3 className="mb-2 text-sm font-semibold tracking-wide text-zinc-400 uppercase">
+          Travelers
+        </h3>
+
+        <ul className="flex flex-col gap-1 text-zinc-200">
+          {state.travelers.map((traveler, index) => (
             <li
-              key={i}
-              className="mb-1"
+              key={index}
+              className="flex items-center justify-between rounded-md bg-zinc-800/60 px-3 py-2"
             >
-              {trav.fullName} (age {trav.age})
+              <span>{traveler.fullName}</span>
+              <span className="text-sm text-zinc-400">age {traveler.age}</span>
             </li>
           ))}
-        </ol>
+        </ul>
       </div>
     </section>
   );

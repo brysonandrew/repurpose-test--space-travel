@@ -1,4 +1,4 @@
-import { FocusEventHandler } from "react";
+import { FocusEventHandler } from 'react';
 
 interface DateInputProps {
   id: string;
@@ -9,15 +9,25 @@ interface DateInputProps {
   min?: string;
   max?: string;
   error?: string;
-  onBlur:FocusEventHandler<HTMLInputElement>
+  onBlur: FocusEventHandler<HTMLInputElement>;
 }
 
-export function DateInput({ id, name, onBlur, label, value, onChange, min, max, error }: DateInputProps) {
+export function DateInput({
+  id,
+  name,
+  onBlur,
+  label,
+  value,
+  onChange,
+  min,
+  max,
+  error,
+}: DateInputProps) {
   return (
     <div className="flex w-full flex-col gap-1">
       <label
         htmlFor={id}
-        className="mb-1 font-medium text-zinc-700 dark:text-zinc-200"
+        className="mb-1 font-medium text-zinc-200"
       >
         {label}
       </label>
@@ -30,7 +40,7 @@ export function DateInput({ id, name, onBlur, label, value, onChange, min, max, 
         max={max}
         onChange={(e) => onChange(e.target.value)}
         onBlur={onBlur}
-        className="dark-date-icon focus-visible:ring-primary/60 w-full rounded-lg border border-zinc-200 bg-white/70 px-3 py-2 shadow-sm transition-all duration-150 outline-none focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 dark:border-zinc-700 dark:bg-zinc-900/60"
+        className="dark-date-icon focus-visible:ring-primary/60 w-full rounded-lg border border-zinc-700 bg-zinc-900/60 px-3 py-2 shadow-sm transition-all duration-150 outline-none focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50"
       />
       {error && <div className="mt-1 text-sm text-red-500">{error}</div>}
     </div>

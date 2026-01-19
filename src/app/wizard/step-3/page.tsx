@@ -3,6 +3,8 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { ReviewStep } from '@/components/wizard/ReviewStep';
+import { FormAlert } from '@/components/shared/FormAlert';
+import { WizardFooter } from '@/components/shared/WizardFooter';
 import { validateDraft } from '@/lib/validation';
 import type { Destination } from '@/lib/types';
 import WizardShell from '@/app/wizard/shell';
@@ -133,32 +135,19 @@ export default function Step3() {
         />
 
         {error && (
-          <div
-            role="alert"
-            className="mt-3 text-red-500"
-          >
-            {error}
-          </div>
+          <FormAlert
+            message={error}
+            className="mt-3"
+          />
         )}
 
-        <div className="mt-7 flex w-full justify-between gap-4">
-          <button
-            type="button"
-            onClick={handleBack}
-            disabled={submitting}
-            className="rounded-lg border border-zinc-200 bg-white/70 px-6 py-2 font-medium text-zinc-900 transition-all hover:bg-zinc-100 disabled:opacity-50 dark:border-zinc-700 dark:bg-zinc-900/60 dark:text-zinc-100 dark:hover:bg-zinc-800"
-          >
-            ← Back
-          </button>
-
-          <button
-            type="submit"
-            disabled={submitting || isInvalid}
-            className="rounded-lg bg-zinc-900/80 px-6 py-2 font-bold text-white transition-all hover:bg-zinc-900 disabled:opacity-50"
-          >
-            {submitting ? 'Booking...' : 'Confirm and Book'}
-          </button>
-        </div>
+        <WizardFooter
+          leftButtonLabel="← Back"
+          onLeftClick={handleBack}
+          leftDisabled={submitting}
+          rightButtonChildren={submitting ? 'Booking...' : 'Confirm and Book'}
+          rightDisabled={submitting || isInvalid}
+        />
       </form>
     </WizardShell>
   );
